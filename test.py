@@ -1,0 +1,199 @@
+# from theano import *
+import theano
+# import theano.tensor as T
+import numpy as np
+from io import BytesIO
+import pylab
+
+# x = np.array([[1,2,3],[4,5,6]])
+# y = np.asarray([[1,2,3],[4,5,6]])
+# z = np.array(x)[1] = 2
+# a = np.asarray(y)[1] = 2
+# print(x)
+# print(y)
+# print(a)
+
+# x = np.array([1,2,3])
+# y = np.array([1.,2.,3.])
+# x = x.astype(float)
+# x = np.float32(x)
+# print(x.dtype)
+# print(y.dtype)
+
+# a = np.arange(10)**3
+# print(a)
+# a[:6:2] = -1
+# print(a,'\n')
+# print(a[:6:2],'\n')
+#
+# def myadd(x,y):
+#     return 10*x+y
+#
+# b = np.arange(10).reshape(2,5)
+# print(myadd(a.reshape([2,5]),b),'\n')
+#
+# print(a,'\n')
+#
+# for row in b:
+#     print(row)
+#     row = 1
+# print(b,'\n')
+#
+# print(np.tile(b,[3,2]),'\n')
+#
+# print(np.arange(0,6),'\n')
+#
+# for column in np.arange(0,5):
+#     print(b[:,column])
+#
+# print(b.shape)
+#
+# b.shape = (5,2)
+#
+# print(b)
+# print()
+#
+# b.reshape(2,5)
+# print(b)
+#
+# b.resize(2,5)
+# print(b)
+#
+# print(np.random.random((10,10)))
+# # print(b[np.newaxis,:,:])
+# # print(b[:,np.newaxis,:])
+# # print(b[:,:,np.newaxis])
+#
+# a=np.array([4.,2.])
+# b=np.array([2.,8.])
+#
+# print(a[:,np.newaxis])
+
+# print(np.column_stack((a,b)))
+# print(np.row_stack((a,b)))
+#
+# print(np.column_stack((a[:,np.newaxis],b[:,np.newaxis])))
+# print(np.row_stack((a[:,np.newaxis],b[:,np.newaxis])))
+#
+# print(np.column_stack((a[np.newaxis,:],b[np.newaxis,:])))
+# print(np.row_stack((a[np.newaxis,:],b[np.newaxis,:])))
+
+# l=[1,2,3]
+# ll=l
+# print(ll is l)
+# lll = l.copy()
+# print(lll is l)
+# print()
+#
+# i = np.array( [ [0,1],                        # indices for the first dim of a
+#                 [1,2] ] )
+# j = np.array( [ [2,1],                        # indices for the second dim
+#                 [3,3] ] )
+#
+# a = np.arange(12).reshape(3,4)
+# s = np.array([i,j])
+# print(s)
+# print(tuple(s))
+# # print(a[s])  #wrong indicies
+# print(a[tuple(s)])
+# print()
+
+# A = np.arange(12)
+#
+# A.shape = (3, 4)
+# M = np.mat(A.copy())
+# print(type(A), "  ", type(M))
+#
+# print(A)
+# print(M)
+#
+# M = np.mat(A)
+# print(type(A), "  ", type(M))
+# print(M is A)
+# print(M.base is A)
+#
+# print(A[:,1].shape,A[:,1])
+# print()
+# print(M[:,1].shape,M[:,1])
+#
+# print(M[:,] == M[:])
+#
+# print(np.ix_((1,2),(1,3)))
+# print(A[[[1,1]
+#         ,[2,2]],[[1,3],
+#                  [1,3]]])
+# print(A[np.ix_((1,2),(1,3))])
+#
+#
+# A[0,:]>1
+# #array([False, False, True, True], dtype=bool)
+# print(A[:,A[0,:]>1])
+# '''array([[ 2,  3],
+#        [ 6,  7],
+#        [10, 11]])'''
+# M = np.mat(A.copy())
+# print(type(M))
+# print(M[0,:]>1)
+# #matrix([[False, False, True, True]], dtype=bool)
+# #print(M[:,M[0,:]>1])
+# #matrix([[2, 3]]) this code went wrong,too many indices for array
+#
+# print(M.A[0,:]>1)
+# print(M[:,M.A[0,:]>1])
+# '''matrix([[ 2,  3],
+#            [ 6,  7],
+#            [10, 11]])'''
+#
+# print(A[A[:,0]>2,A[0,:]>1])
+# #array([ 6, 11])
+# print(M[M.A[:,0]>2,M.A[0,:]>1])
+# #matrix([[ 6, 11]])      变成索引对号入座形式  两个相同维度的索引，每个位置一一对应，得到元素的横纵坐标，所以取了两个数。需要采用ix_()的方法,
+# #或者采用两个多维索引来一一对应
+#
+# print(A[np.ix_(A[:,0]>2,A[0,:]>1)])
+# '''array([[ 6,  7],
+#        [10, 11]])'''
+# print(M[np.ix_(M.A[:,0]>2,M.A[0,:]>1)])
+# '''matrix([[ 6,  7],
+#         [10, 11]])'''
+# print()
+#
+# print(A[-1,1:4])
+# print(M[-1,1:4])
+# print(A[-3:-1,1:4])
+# print(M[-3:-1,1:4])
+# print()
+#
+# ########################################################################
+#
+# x = np.arange(0,10,2)                     # x=([0,2,4,6,8])
+# y = np.arange(5)                          # y=([0,1,2,3,4])
+# m = np.vstack([x,y])                      # m=([[0,2,4,6,8],
+#                                        #     [0,1,2,3,4]])
+# xy = np.hstack([x,y])                     # xy =([0,2,4,6,8,0,1,2,3,4])
+#
+# n = np.array([x,y])
+# print(n)
+# print(n==m)
+# print(type(n),type(m))
+#
+# # Build a vector of 10000 normal deviates with variance 0.5^2 and mean 2
+# mu, sigma = 2, 0.5
+# v = np.random.normal(mu,sigma,10000)
+# # Plot a normalized histogram with 50 bins
+# pylab.hist(v, bins=50, normed=1)       # matplotlib version (plot)
+# pylab.show()
+# # Compute the histogram with numpy and then plot it
+# (n, bins) = np.histogram(v, bins=50, normed=True)  # NumPy version (no plot)
+# pylab.plot(.5*(bins[1:]+bins[:-1]), n)
+# pylab.show()
+
+##############################################
+
+x = np.eye(2, dtype=theano.config.floatX)
+w = np.ones((2, 2), dtype=theano.config.floatX)
+b = np.ones((2), dtype=theano.config.floatX)
+b[1] = 2
+print(b,'\n')
+print(x.dot(w)+b,'\n')
+print(np.tanh(x.dot(w) + b),'\n')
