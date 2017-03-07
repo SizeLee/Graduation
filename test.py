@@ -199,7 +199,14 @@ import pylab
 # print(np.tanh(x.dot(w) + b),'\n')
 
 ############
-a = tuple([1,2])
-b = tuple([2,3])
-c = a+(4,)
-print(c)
+# a = tuple([1,2])
+# b = tuple([2,3])
+# c = a+(4,)
+# print(c)
+###########
+x = np.floor(5*0.39999999)
+print(x)
+print('123'
+      '456')
+x = range(5)
+print(x)
