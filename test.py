@@ -190,10 +190,16 @@ import pylab
 
 ##############################################
 
-x = np.eye(2, dtype=theano.config.floatX)
-w = np.ones((2, 2), dtype=theano.config.floatX)
-b = np.ones((2), dtype=theano.config.floatX)
-b[1] = 2
-print(b,'\n')
-print(x.dot(w)+b,'\n')
-print(np.tanh(x.dot(w) + b),'\n')
+# x = np.eye(2, dtype=theano.config.floatX)
+# w = np.ones((2, 2), dtype=theano.config.floatX)
+# b = np.ones((2), dtype=theano.config.floatX)
+# b[1] = 2
+# print(b,'\n')
+# print(x.dot(w)+b,'\n')
+# print(np.tanh(x.dot(w) + b),'\n')
+
+############
+a = tuple([1,2])
+b = tuple([2,3])
+c = a+(4,)
+print(c)

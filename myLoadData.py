@@ -15,7 +15,7 @@ class loadIris:
     sampleX = None
     sampleY = None
     def __init__(self):
-        fp = open('iris.txt')
+        fp = open('iris.txt','r')
 
         sampleCount = 0
         self.sampleList = []
@@ -74,15 +74,15 @@ class loadIris:
         self.IrisDataTestX = self.IrisDataX[int(0.8 * sampleCount):, :]
         self.IrisDataTestY = self.IrisDataY[int(0.8 * sampleCount):, :]
 
-        print(self.IrisDataTrainX.shape)
-        print(self.IrisDataTrainY.shape)
+        # print(self.IrisDataTrainX.shape)
+        # print(self.IrisDataTrainY.shape)
+        #
+        # print(self.IrisDataValX.shape)
+        # print(self.IrisDataValY.shape)
+        #
+        # print(self.IrisDataTestX.shape)
+        # print(self.IrisDataTestY.shape)
 
-        print(self.IrisDataValX.shape)
-        print(self.IrisDataValY.shape)
-
-        print(self.IrisDataTestX.shape)
-        print(self.IrisDataTestY.shape)
 
 
-
-loadiris = loadIris()
+# loadiris = loadIris()
