@@ -3,11 +3,16 @@ import random
 import copy
 import myLoadData
 class dataLossSimulator:
-    originDim = 0 ###number of dim of loss range, first originDim of data exist loss
-    lossRate = 0.
-    lossDimEachSample = 0
-    lossSetValue = 0.
+    # originDim = 0 ###number of dim of loss range, first originDim of data exist loss
+    # lossRate = 0.
+    # lossDimEachSample = 0
+    # lossSetValue = 0.
     def __init__(self, originDim, lossRate, lossSetValue = 0):
+        self.originDim = 0  ###number of dim of loss range, first originDim of data exist loss
+        self.lossRate = 0.
+        self.lossDimEachSample = 0
+        self.lossSetValue = 0.
+
         if lossRate < 0 or lossRate > 1:
             print('Error in dataLossSimulator: loss Dim is larger than originDim')
             exit(1)####todo error throw out

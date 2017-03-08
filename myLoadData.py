@@ -1,21 +1,35 @@
 import numpy as np
 import random
 class loadIris:
-    IrisDataX = None
-    IrisDataTrainX = None
-    IrisDataValX = None
-    IrisDataTestX = None
-
-    IrisDataY = None
-    IrisDataTrainY = None
-    IrisDataTestY = None
-    IrisDataValY = None
-
-    sampleList = None
-    sampleX = None
-    sampleY = None
+    # IrisDataX = None
+    # IrisDataTrainX = None
+    # IrisDataValX = None
+    # IrisDataTestX = None
+    #
+    # IrisDataY = None
+    # IrisDataTrainY = None
+    # IrisDataTestY = None
+    # IrisDataValY = None
+    #
+    # sampleList = None
+    # sampleX = None
+    # sampleY = None
     def __init__(self):
         fp = open('iris.txt','r')
+
+        self.IrisDataX = None
+        self.IrisDataTrainX = None
+        self.IrisDataValX = None
+        self.IrisDataTestX = None
+
+        self.IrisDataY = None
+        self.IrisDataTrainY = None
+        self.IrisDataTestY = None
+        self.IrisDataValY = None
+
+        self.sampleList = None
+        self.sampleX = None
+        self.sampleY = None
 
         sampleCount = 0
         self.sampleList = []
@@ -73,6 +87,8 @@ class loadIris:
 
         self.IrisDataTestX = self.IrisDataX[int(0.8 * sampleCount):, :]
         self.IrisDataTestY = self.IrisDataY[int(0.8 * sampleCount):, :]
+
+        fp.close()
 
         # print(self.IrisDataTrainX.shape)
         # print(self.IrisDataTrainY.shape)

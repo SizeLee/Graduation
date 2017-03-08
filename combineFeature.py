@@ -2,10 +2,15 @@ import numpy as np
 import myLoadData
 
 class combineFeature:
-    __featureNum = 0
-    __combineNum = 0
-    __featureCombineMap = []
+    # __featureNum = 0
+    # __combineNum = 0
+    # __featureCombineMap = []
+
     def __init__(self, featureNum, combineNum):
+        self.__featureNum = 0
+        self.__combineNum = 0
+        self.__featureCombineMap = []
+
         self.__featureNum = featureNum
         self.__combineNum = combineNum
         self.__combineFun(0, 0, )
@@ -64,6 +69,8 @@ class combineFeature:
 # b = a.makeCombineData(irisData.IrisDataTrainX)
 # print(b)
 # print(b.shape)
+# a = combineFeature(6,4)
+# a.outputCombineMap()
 
 
 

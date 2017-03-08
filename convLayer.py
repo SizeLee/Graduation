@@ -4,10 +4,9 @@ import myLoadData
 import combineFeature
 
 class convLayerCore:
-    __w = None
-    __inputDataX = None
-
     def __init__(self, InputDataX, wLength ):
+        self.__w = None
+        self.__inputDataX = None
         sampleNum = InputDataX.shape[0]
         combineNum = InputDataX.shape[1]
         combineFeatureNum = InputDataX.shape[2]
@@ -34,11 +33,10 @@ class convLayerCore:
     #todo def BP function
 
 
-
-########Test
 # irisData = myLoadData.loadIris()
 # comb = combineFeature.combineFeature(4,2)
 # inputDataX = comb.makeCombineData(irisData.IrisDataTestX)
 # testConvCore = convLayerCore(inputDataX, inputDataX.shape[2])
 # convOut = testConvCore.calculator()
 # print(convOut)
+# print(inputDataX)
