@@ -17,6 +17,7 @@ class convLayerCore:
         self.__inputDataX = copy.deepcopy(InputDataX)
 
         self.__w = 0.24 * np.random.rand(wLength, 1) - 0.12
+        # print(self.__w)
 
 
     def calculator(self):

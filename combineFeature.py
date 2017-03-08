@@ -51,7 +51,7 @@ class combineFeature:
 
                 elif sample.shape[0] > 1 and sample.shape[1] == 1:
                     sample = sample.transpose()[0]
-                    print(sample)
+                    # print(sample)
 
 
             for combine in self.__featureCombineMap:
