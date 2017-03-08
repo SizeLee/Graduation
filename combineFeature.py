@@ -41,6 +41,19 @@ class combineFeature:
         for sample in dataX:
             combineSample = [] ##一个样本的所有组合
             # print(sample)
+            # print(len(sample.shape))
+            if len(sample.shape) > 2:
+                print('Error in combineFeature: Can\'t support combine Data dim large than 3')
+
+            elif len(sample.shape) == 2:
+                if sample.shape[0] > 1 and sample.shape[1] > 1:
+                    print('Error in  combineFeature: Can\'t support combine Data Sample isn\'t line vector')
+
+                elif sample.shape[0] > 1 and sample.shape[1] == 1:
+                    sample = sample.transpose()[0]
+                    print(sample)
+
+
             for combine in self.__featureCombineMap:
                 # print(combine)
                 combineTemp = [] ###一个组合
