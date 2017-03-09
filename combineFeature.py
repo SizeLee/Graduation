@@ -21,7 +21,7 @@ class combineFeature:
             # print(combine)
             self.__featureCombineMap.append(combine)
             return
-        elif considerFeatureNo>=self.__featureNum:
+        elif considerFeatureNo >= self.__featureNum:
             return
 
         self.__combineFun(considerFeatureNo+1, alreadyCombine, *combine)

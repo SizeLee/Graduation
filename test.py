@@ -219,8 +219,16 @@ x = np.array([[[ 0.25435214,  0.14849252,  0.28359378,  0.54253786],
   [ 0.06751567,  0.11925088,  0.25435214,  0.14849252]]])
 print(x)
 print(x.shape)
+print(np.amax(x, axis=0))
+print(np.argmax(x, axis=0))
 print(x.max(0),'\n')##sample
+
+print(np.amax(x, axis=1))
+print(np.argmax(x, axis=1))
 print(x.max(1),'\n')##column
+
+print(np.amax(x, axis=2))
+print(np.argmax(x, axis=2))
 print(x.max(2),'\n')##row
 print()
 

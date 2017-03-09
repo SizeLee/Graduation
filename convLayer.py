@@ -7,6 +7,7 @@ class convLayerCore:
     def __init__(self, InputDataX, wLength ):
         self.__w = None
         self.__inputDataX = None
+        self.__outputDataX = None
         sampleNum = InputDataX.shape[0]
         combineNum = InputDataX.shape[1]
         combineFeatureNum = InputDataX.shape[2]
@@ -20,7 +21,8 @@ class convLayerCore:
         # print(self.__w)
 
 
-    def calculator(self):
+    def calculate(self):
+        self.__outputDataX = np.dot(self.__inputDataX, self.__w)
         # print(np.dot(self.__inputDataX, self.__w).shape)
         for sample in self.__inputDataX:
             break;
@@ -29,7 +31,7 @@ class convLayerCore:
             print(self.__w)
             print(outputSample)
 
-        return np.dot(self.__inputDataX, self.__w)
+        return self.__outputDataX
 
     #todo def BP function
 
@@ -38,6 +40,6 @@ class convLayerCore:
 # comb = combineFeature.combineFeature(4,2)
 # inputDataX = comb.makeCombineData(irisData.IrisDataTestX)
 # testConvCore = convLayerCore(inputDataX, inputDataX.shape[2])
-# convOut = testConvCore.calculator()
+# convOut = testConvCore.calculate()
 # print(convOut)
 # print(inputDataX)
