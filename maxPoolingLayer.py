@@ -8,7 +8,7 @@ class maxPoolingLayerCore:
 
     def __init__(self, inputDataX):
 
-        self.__inputDataX = inputDataX
+        self.__inputDataX = copy.deepcopy(inputDataX)
         self.__poolingSize = inputDataX.shape[2]
         self.__poolingPosition = None
         self.__outputDataX = None
@@ -20,7 +20,11 @@ class maxPoolingLayerCore:
         # print(self.__outputDataX)
         # print(self.__poolingPosition)
 
-        return self.__outputDataX
+        return copy.deepcopy(self.__outputDataX)
+
+    def outputCalculateResult(self):
+        print(self.__outputDataX)
+
 
     #todo def BP function
 
@@ -36,4 +40,8 @@ class maxPoolingLayerCore:
 # inputPoolingDataX = comb2.makeCombineData(convOut)
 # # print(inputPoolingDataX)
 # testPoolingCore = maxPoolingLayerCore(inputPoolingDataX)
-# testPoolingCore.calculate()
+# result = testPoolingCore.calculate()
+# print(result)
+# result[:,:]=1
+# testPoolingCore.outputCalculateResult()
+

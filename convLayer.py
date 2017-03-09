@@ -31,7 +31,7 @@ class convLayerCore:
             print(self.__w)
             print(outputSample)
 
-        return self.__outputDataX
+        return copy.deepcopy(self.__outputDataX)
 
     #todo def BP function
 
