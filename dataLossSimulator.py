@@ -1,6 +1,5 @@
 import numpy as np
 import random
-import copy
 import myLoadData
 class dataLossSimulator:
     # originDim = 0 ###number of dim of loss range, first originDim of data exist loss
@@ -14,7 +13,7 @@ class dataLossSimulator:
         self.lossSetValue = 0.
 
         if lossRate < 0 or lossRate > 1:
-            print('Error in dataLossSimulator: loss Dim is larger than originDim')
+            print('Error in dataLossSimulator: loss Dim is larger than originDim\n')
             exit(1)####todo error throw out
 
         self.originDim = originDim
@@ -26,18 +25,18 @@ class dataLossSimulator:
         if len(dataX.shape) < 2:
             datarowdim = dataX.shape
         elif len(dataX.shape) > 2:
-            print('Unable to process loss on matrix whose dim is above 3')
+            print('Unable to process loss on matrix whose dim is above 3\n')
             exit(1)  ####todo error throw out
         else:
             sample = dataX.shape[0]
             datarowdim = dataX.shape[1]
 
         if datarowdim<self.originDim:
-            print('Error in dataLossSimulator: dataDim is smaller than originDim')
+            print('Error in dataLossSimulator: dataDim is smaller than originDim\n')
             exit(1)  ####todo error throw out
         elif datarowdim>self.originDim:
             print('Warning in dataLossSimulator: dataDim is larger than originDim,'
-                  'only former part dim of data exist loss')
+                  'only former part dim of data exist loss\n')
 
         lossDataX = []
         for sample in dataX:

@@ -14,6 +14,9 @@ class loadIris:
     # sampleList = None
     # sampleX = None
     # sampleY = None
+
+    dataName = 'Iris'
+
     def __init__(self):
         fp = open('iris.txt','r')
 

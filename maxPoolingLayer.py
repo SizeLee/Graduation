@@ -1,5 +1,4 @@
 import numpy as np
-import copy
 import myLoadData
 import combineFeature
 import convLayer
@@ -8,7 +7,7 @@ class maxPoolingLayerCore:
 
     def __init__(self, inputDataX):
 
-        self.__inputDataX = copy.deepcopy(inputDataX)
+        self.__inputDataX = inputDataX.copy()
         self.__poolingSize = inputDataX.shape[2]
         self.__poolingPosition = None
         self.__outputDataX = None
@@ -20,7 +19,7 @@ class maxPoolingLayerCore:
         # print(self.__outputDataX)
         # print(self.__poolingPosition)
 
-        return copy.deepcopy(self.__outputDataX)
+        return self.__outputDataX.copy()
 
     def outputCalculateResult(self):
         print(self.__outputDataX)

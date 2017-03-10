@@ -1,5 +1,5 @@
 import numpy as np
-import copy
+import activationFunction
 import myLoadData
 import combineFeature
 
@@ -8,14 +8,15 @@ class convLayerCore:
         self.__w = None
         self.__inputDataX = None
         self.__outputDataX = None
+        self.__outputDataAct = None
         sampleNum = InputDataX.shape[0]
         combineNum = InputDataX.shape[1]
         combineFeatureNum = InputDataX.shape[2]
         if wLength!=combineFeatureNum:
-            print('Error in convlayer.Wrong conv core length')
+            print('Error in convlayer.Wrong conv core length\n')
             exit(1)#todo throw error
 
-        self.__inputDataX = copy.deepcopy(InputDataX)
+        self.__inputDataX = InputDataX.copy()
 
         self.__w = 0.24 * np.random.rand(wLength, 1) - 0.12
         # print(self.__w)
@@ -31,7 +32,9 @@ class convLayerCore:
             print(self.__w)
             print(outputSample)
 
-        return copy.deepcopy(self.__outputDataX)
+        self.__outputDataAct = activationFunction.leakyReLU(self.__outputDataX, 0.5)
+
+        return self.__outputDataAct.copy()
 
     #todo def BP function
 
