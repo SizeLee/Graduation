@@ -41,7 +41,7 @@ class convLayerCore:
 
 # irisData = myLoadData.loadIris()
 # comb = combineFeature.combineFeature(4,2)
-# inputDataX = comb.makeCombineData(irisData.IrisDataTestX)
+# inputDataX = comb.makeCombineData(irisData.DataTestX)
 # testConvCore = convLayerCore(inputDataX, inputDataX.shape[2])
 # convOut = testConvCore.calculate()
 # print(convOut)

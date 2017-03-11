@@ -54,7 +54,7 @@ class dataLossSimulator:
 
 
 # lossTest = dataLossSimulator(4, 0.3)
-# testData = myLoadData.loadIris().IrisDataTrainX
+# testData = myLoadData.loadIris().DataTrainX
 # print(testData)
 # lossdata = lossTest.lossSimulate(testData)
 # print(lossdata)

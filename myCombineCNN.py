@@ -16,7 +16,7 @@ class myCombineCNN:
         if dataName == 'Iris':
             self.data = myLoadData.loadIris()
         else:
-            print('Waiting for new data set')
+            print('No such data file, Waiting for new data set\n')
             exit(1) # todo throw error or set new data
 
 

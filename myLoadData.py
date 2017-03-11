@@ -1,15 +1,16 @@
 import numpy as np
 import random
+import dataLossSimulator
 class loadIris:
-    # IrisDataX = None
-    # IrisDataTrainX = None
-    # IrisDataValX = None
-    # IrisDataTestX = None
+    # DataX = None
+    # DataTrainX = None
+    # DataValX = None
+    # DataTestX = None
     #
-    # IrisDataY = None
-    # IrisDataTrainY = None
-    # IrisDataTestY = None
-    # IrisDataValY = None
+    # DataY = None
+    # DataTrainY = None
+    # DataTestY = None
+    # DataValY = None
     #
     # sampleList = None
     # sampleX = None
@@ -17,22 +18,28 @@ class loadIris:
 
     dataName = 'Iris'
 
-    def __init__(self):
+    def __init__(self, lossRate, setlossValue = 0):
         fp = open('iris.txt','r')
 
-        self.IrisDataX = None
-        self.IrisDataTrainX = None
-        self.IrisDataValX = None
-        self.IrisDataTestX = None
+        self.DataX = None
+        self.DataTrainX = None
+        self.DataTrainXLoss = None
+        self.DataValX = None
+        self.DataValXLoss = None
+        self.DataTestX = None
+        self.DataTestXLoss = None
 
-        self.IrisDataY = None
-        self.IrisDataTrainY = None
-        self.IrisDataTestY = None
-        self.IrisDataValY = None
+        self.DataY = None
+        self.DataTrainY = None
+        self.DataTestY = None
+        self.DataValY = None
 
         self.sampleList = None
         self.sampleX = None
         self.sampleY = None
+
+        self.lossRate = lossRate
+        self.setLossValue = setlossValue
 
         sampleCount = 0
         self.sampleList = []
@@ -76,31 +83,37 @@ class loadIris:
             self.sampleX.append(line[0])
             self.sampleY.append(line[1])
 
-        self.IrisDataX = np.array(self.sampleX)
-        self.IrisDataY = np.array(self.sampleY,dtype=float)
+        self.DataX = np.array(self.sampleX)
+        self.DataY = np.array(self.sampleY,dtype=float)
 
         # print(self.IrisDataX)
         # print(self.IrisDataY)
 
-        self.IrisDataTrainX = self.IrisDataX[:int(0.6 * sampleCount), :]
-        self.IrisDataTrainY = self.IrisDataY[:int(0.6 * sampleCount), :]
+        self.DataTrainX = self.DataX[:int(0.6 * sampleCount), :]
+        self.DataTrainY = self.DataY[:int(0.6 * sampleCount), :]
 
-        self.IrisDataValX = self.IrisDataX[int(0.6 * sampleCount):int(0.8 * sampleCount), :]
-        self.IrisDataValY = self.IrisDataY[int(0.6 * sampleCount):int(0.8 * sampleCount), :]
+        self.DataValX = self.DataX[int(0.6 * sampleCount):int(0.8 * sampleCount), :]
+        self.DataValY = self.DataY[int(0.6 * sampleCount):int(0.8 * sampleCount), :]
 
-        self.IrisDataTestX = self.IrisDataX[int(0.8 * sampleCount):, :]
-        self.IrisDataTestY = self.IrisDataY[int(0.8 * sampleCount):, :]
+        self.DataTestX = self.DataX[int(0.8 * sampleCount):, :]
+        self.DataTestY = self.DataY[int(0.8 * sampleCount):, :]
 
         fp.close()
 
-        # print(self.IrisDataTrainX.shape)
-        # print(self.IrisDataTrainY.shape)
+        # print(self.DataTrainX.shape)
+        # print(self.DataTrainY.shape)
         #
-        # print(self.IrisDataValX.shape)
-        # print(self.IrisDataValY.shape)
+        # print(self.DataValX.shape)
+        # print(self.DataValY.shape)
         #
-        # print(self.IrisDataTestX.shape)
-        # print(self.IrisDataTestY.shape)
+        # print(self.DataTestX.shape)
+        # print(self.DataTestY.shape)
+
+        self.lossSimulator = dataLossSimulator.dataLossSimulator(self.DataX.shape[1], self.lossRate, self.setLossValue)
+
+        self.DataTrainXLoss = self.lossSimulator.lossSimulate(self.DataTrainX)
+        self.DataValXLoss = self.lossSimulator.lossSimulate(self.DataValX)
+        self.DataTestXLoss = self.lossSimulator.lossSimulate(self.DataTestX)
 
 
 

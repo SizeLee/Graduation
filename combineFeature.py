@@ -79,7 +79,7 @@ class combineFeature:
 # a = combineFeature(4,2)
 # a.outputCombineMap()
 # irisData = myLoadData.loadIris()
-# b = a.makeCombineData(irisData.IrisDataTrainX)
+# b = a.makeCombineData(irisData.DataTrainX)
 # print(b)
 # print(b.shape)
 # a = combineFeature(6,4)
