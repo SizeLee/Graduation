@@ -247,6 +247,9 @@ k = np.array([[ 0.06751567,  -0.11925088,  0.25435214,  0.54253786],
 
 z = np.hstack((y,k))
 print(z)
-print(np.hstack((y)))
+z[:] = 1
+print(y)
+z = y.transpose()
+print(y[1:,:].T)
 
 

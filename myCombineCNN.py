@@ -34,7 +34,7 @@ class myCombineCNN:
         self.predictResult = None
 
 
-    def runCNN(self):
+    def trainCNN(self, trainRound, trainRate):
 
         self.combConvLayer1 = combineFeature.combineFeature(self.data.DataX.shape[1], self.combineNumConv1)
         combKindNumConv1 = combineNumCalculate.combineNumCal(self.data.DataX.shape[1], self.combineNumConv1)
@@ -66,9 +66,9 @@ class myCombineCNN:
         # print(self.allConnectData)
         # print(self.allConnectData.shape)
 
-        self.fullInputLayer = fullConnect.fullConnectInputLayer(self.allConnectData)
+        self.fullInputLayer = fullConnect.fullConnectInputLayer(self.allConnectData, trainRate)
         self.midACData = self.fullInputLayer.calculate()
-        self.fullMidLayer = fullConnect.fullConnectMidLayer(self.midACData,self.data.DataTrainY)
+        self.fullMidLayer = fullConnect.fullConnectMidLayer(self.midACData,self.data.DataTrainY,trainRate)
         self.predictResult = self.fullMidLayer.calculate()
 
         # print(self.predictResult)
@@ -76,12 +76,26 @@ class myCombineCNN:
         # print(self.predictResult.shape)
         # print(self.data.DataTrainY.shape)
 
-        #todo BP process
+        # todo BP process
+        formerLayerSF = self.fullMidLayer.BP()
+        # print(formerLayerSF)
+        # print(formerLayerSF.shape)
+        formerLayerSF = self.fullInputLayer.BP(formerLayerSF)
+        # print(formerLayerSF)
+        # print(formerLayerSF.shape)
+
+
+
+    #todo def runCNN(self):
+
+
+
+
 
 
 irisDATA = myLoadData.loadIris()
 mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-mcnn.runCNN()
+mcnn.trainCNN(1000,0.1)
 
 
 
