@@ -14,7 +14,7 @@ class fullConnectInputLayer:
 
         self.__L_in = inputDataX.shape[1]
         self.__LoutinRate = LoutinRate
-        self.__L_out = np.floor(self.__LoutinRate * self.__L_in)
+        self.__L_out = int(np.floor(self.__LoutinRate * self.__L_in))
         self.epsilon = np.sqrt(6)/(np.sqrt(self.__L_in) + np.sqrt(self.__L_out))
         self.__w = np.random.rand(self.__L_in, self.__L_out) * 2 * self.epsilon - self.epsilon
         self.__inputDataX = inputDataX.copy()
@@ -46,7 +46,7 @@ class fullConnectMidLayer:
         self.__L_out = y.shape[1]
         self.epsilon = np.sqrt(6) / (np.sqrt(self.__L_in) + np.sqrt(self.__L_out))
         self.__w = np.random.rand(self.__L_in, self.__L_out) * 2 * self.epsilon - self.epsilon
-        self.__midInputDataX = copy.deepcopy(midInputDataX)
+        self.__midInputDataX = midInputDataX.copy()
         self.__outputY = None
         self.__outputYAct = None
 

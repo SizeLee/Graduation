@@ -13,6 +13,10 @@ class combineFeature:
 
         self.__featureNum = featureNum
         self.__combineNum = combineNum
+
+        if self.__featureNum < self.__combineNum:
+            print("Warning in combineFeature: feature Num is smaller combine Num, No combine will be make\n")
+
         self.__combineFun(0, 0, )
 
     def __combineFun(self, considerFeatureNo, alreadyCombine, *combine):
