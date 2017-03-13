@@ -249,6 +249,7 @@ k = np.array([[ 0.06751567,  -0.11925088,  0.25435214,  0.54253786],
 # print(z)
 # z[:] = 1
 # print(y)
+# print(z)
 # z = y.transpose()
 # print(y[1:2,:])
 #
@@ -272,14 +273,21 @@ k = np.array([[ 0.06751567,  -0.11925088,  0.25435214,  0.54253786],
 # #   print(b)
 # print(x[1])
 # print(x[1,:,:])
-x = np.ones((2,2))
-ls = list()
-for i in range(5):
-    ls.append(x)
+# x = np.ones((2,2))
+# ls = list()
+# for i in range(5):
+#     ls.append(x)
+#
+# print(ls)
+# y = np.array(ls)
+# print(y)
+# print(y.shape)
 
-print(ls)
-y = np.array(ls)
-print(y)
-print(y.shape)
+a = None
+if a is not None:
+    print(1)
+else:
+    print(0)
 
+print(k[1:3,:].shape)
 

@@ -112,7 +112,7 @@ class myCombineCNN:
         # print(formerLayerSF[0].shape)
         # print(len(formerLayerSF))
 
-        #####################
+        #####################   conv layer BP
         for i in range(self.convCoreNum1):
             self.convCoreList1[i].BP(self.convSFlist[i])
 

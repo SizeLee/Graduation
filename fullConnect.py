@@ -25,7 +25,15 @@ class fullConnectInputLayer:
         self.__trainRate = trainRate
 
 
-    def calculate(self):
+    def calculate(self, newInputDataX = None):
+
+        if newInputDataX is not None:
+
+            if self.__inputDataX[:, 1:].shape != newInputDataX.shape:
+                print('Error in full connect input layer: new data is with wrong size\n')
+                exit(1)  # todo throw out error
+            else:
+                self.__inputDataX = np.hstack((np.ones((self.sampleNum, 1)), newInputDataX))    ##########iterate new data into mid layer
 
         self.__outputDataX = np.dot(self.__inputDataX, self.__w)
         self.__outputDataAct = activationFunction.sigmoid(self.__outputDataX)
@@ -67,7 +75,16 @@ class fullConnectMidLayer:
         self.__yLabel = y.copy()
         self.__trainRate = trainRate
 
-    def calculate(self):
+    def calculate(self, newInputDataX = None):
+
+        if newInputDataX is not None:
+
+            if self.__midInputDataX[:, 1:].shape != newInputDataX.shape:
+                print('Error in full connect mid layer: new data is with wrong size\n')
+                exit(1)  # todo throw out error
+            else:
+                self.__midInputDataX = np.hstack((np.ones((self.sampleNum, 1)), newInputDataX))    ##########iterate new data into mid layer
+
         self.__outputY = np.dot(self.__midInputDataX, self.__w)
         self.__outputYAct = activationFunction.sigmoid(self.__outputY)
 

@@ -12,7 +12,13 @@ class maxPoolingLayerCore:
         self.__poolingPosition = None
         self.__outputDataX = None
 
-    def calculate(self):
+    def calculate(self, newInputDataX = None):
+        if newInputDataX is not None:
+            if self.__inputDataX.shape != newInputDataX.shape:
+                print('Error in pooling layer: new data is with wrong size\n')
+                exit(1)  # todo throw out error
+            else:
+                self.__inputDataX = newInputDataX.copy()  ####iterate newdata into max pooling layer
 
         self.__outputDataX = np.max(self.__inputDataX, axis=2) ##obtain max of each row in each sample, it's max pooling
         self.__poolingPosition = np.argmax(self.__inputDataX, axis=2) ##obtain taking value's position, for latter BP process

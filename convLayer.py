@@ -24,7 +24,14 @@ class convLayerCore:
         self.__trainRate = trainRate
 
 
-    def calculate(self):
+    def calculate(self, newInputDataX = None):
+        if newInputDataX is not None:
+            if self.__inputDataX.shape != newInputDataX.shape:
+                print('Error in conv layer: new data is with wrong size\n')
+                exit(1) #todo throw out error
+            else:
+                self.__inputDataX = newInputDataX.copy()    ####iterate newdata into convLayer
+
         self.__outputDataX = np.dot(self.__inputDataX, self.__w)
         # print(np.dot(self.__inputDataX, self.__w).shape)
         for sample in self.__inputDataX:
