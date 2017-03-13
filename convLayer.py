@@ -61,6 +61,8 @@ class convLayerCore:
         for i in range(sampleNum):
             wGradient += np.dot(self.__inputDataX[i, :, :].T, sensitivityFactor[i, :, :])
 
+        wGradient *= (1/sampleNum)
+
         formerLayerSF = list()
         for i in range(sampleNum):
             formerLayerSF.append(np.dot(sensitivityFactor[i, :, :], self.__w.T))
