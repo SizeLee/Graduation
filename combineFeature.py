@@ -76,7 +76,27 @@ class combineFeature:
         return np.array(combineData)
 
     #todo def bp delt map generator
+    def BP(self, sensitivityFactor):
+        if sensitivityFactor.shape[1] != len(self.__featureCombineMap) \
+                or sensitivityFactor.shape[2] != len(self.__featureCombineMap[0]):
+            print('Error in combineFeature BP: sensitivity factor size error\n')
+            exit(1)  # todo throw out error
 
+        sampleNum = sensitivityFactor.shape[0]
+        combNum = sensitivityFactor.shape[1]
+        combLengthFeatureNum = sensitivityFactor.shape[2]
+
+        formerSF = np.zeros((sampleNum, self.__featureNum, 1))
+
+        for i in range(sampleNum):
+            for j in range(combNum):
+                for k in range(combLengthFeatureNum):
+                    formerSF[i, self.__featureCombineMap[j][k]] += sensitivityFactor[i, j, k]
+
+        # print(sensitivityFactor)
+        # print(self.__featureCombineMap)
+        # print(formerSF)
+        return formerSF
 
 
 ##########Test

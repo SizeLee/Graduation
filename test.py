@@ -245,11 +245,21 @@ k = np.array([[ 0.06751567,  -0.11925088,  0.25435214,  0.54253786],
   [ -0.06751567,  0.11925088,  0.25435214,  0.28359378],
   [ 0.06751567,  0.11925088,  0.25435214,  -0.14849252]])
 
-z = np.hstack((y,k))
-print(z)
-z[:] = 1
-print(y)
-z = y.transpose()
-print(y[1:2,:])
+# z = np.hstack((y,k))
+# print(z)
+# z[:] = 1
+# print(y)
+# z = y.transpose()
+# print(y[1:2,:])
+#
+# x = 2 * np.ones((10, 4, 2))
+# y = 3 * np.ones((10, 2))
+# z = np.dot(x, y.T)
+# print(z)
+# print(z.shape)
+
+for sample in x:
+  print(sample)
+  print()
 
 

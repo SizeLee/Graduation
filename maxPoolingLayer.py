@@ -28,8 +28,9 @@ class maxPoolingLayerCore:
     #todo def BP function
     def BP(self, sensitivityFactor):
 
-        if sensitivityFactor.shape[0] != self.__inputDataX.shape[0] or sensitivityFactor.shape[1] != self.__inputDataX.shape[1]:
-            print('Error in maxpooling BP: input wrong sensitivity factor')
+        if sensitivityFactor.shape[0] != self.__inputDataX.shape[0] \
+                or sensitivityFactor.shape[1] != self.__inputDataX.shape[1]:
+            print('Error in maxpooling BP: input wrong sensitivity factor\n')
             exit(1) #todo throw out error
 
         sampleNum = sensitivityFactor.shape[0]

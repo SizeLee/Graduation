@@ -99,7 +99,15 @@ class myCombineCNN:
 
         # print(formerLayerSF[0])
 
-        
+        formerLayerSFTemp = list()
+        for i in range(self.convCoreNum1):
+            formerLayerSFTemp.append(self.combPoolingLayer1.BP(formerLayerSF[i]))
+
+        formerLayerSF = formerLayerSFTemp
+
+        # print(formerLayerSF)
+        # print(formerLayerSF[0].shape)
+        # print(len(formerLayerSF))
 
 
 
