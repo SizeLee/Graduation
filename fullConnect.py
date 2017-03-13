@@ -29,10 +29,11 @@ class fullConnectInputLayer:
 
         if newInputDataX is not None:
 
-            if self.__inputDataX[:, 1:].shape != newInputDataX.shape:
+            if self.__inputDataX[:, 1:].shape[1] != newInputDataX.shape[1]:
                 print('Error in full connect input layer: new data is with wrong size\n')
                 exit(1)  # todo throw out error
             else:
+                self.sampleNum = newInputDataX.shape[0]
                 self.__inputDataX = np.hstack((np.ones((self.sampleNum, 1)), newInputDataX))    ##########iterate new data into mid layer
 
         self.__outputDataX = np.dot(self.__inputDataX, self.__w)
@@ -79,10 +80,11 @@ class fullConnectMidLayer:
 
         if newInputDataX is not None:
 
-            if self.__midInputDataX[:, 1:].shape != newInputDataX.shape:
+            if self.__midInputDataX[:, 1:].shape[1] != newInputDataX.shape[1]:
                 print('Error in full connect mid layer: new data is with wrong size\n')
                 exit(1)  # todo throw out error
             else:
+                self.sampleNum = newInputDataX.shape[0]
                 self.__midInputDataX = np.hstack((np.ones((self.sampleNum, 1)), newInputDataX))    ##########iterate new data into mid layer
 
         self.__outputY = np.dot(self.__midInputDataX, self.__w)

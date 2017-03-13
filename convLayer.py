@@ -26,7 +26,7 @@ class convLayerCore:
 
     def calculate(self, newInputDataX = None):
         if newInputDataX is not None:
-            if self.__inputDataX.shape != newInputDataX.shape:
+            if self.__inputDataX.shape[1] != newInputDataX.shape[1]:
                 print('Error in conv layer: new data is with wrong size\n')
                 exit(1) #todo throw out error
             else:
