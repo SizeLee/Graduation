@@ -33,6 +33,9 @@ class myCombineCNN:
 
         self.predictResult = None
 
+        self.poolingSFlist = list()
+        self.convSFlist = list()
+
 
     def trainCNN(self, trainRound, trainRate):
 
@@ -82,7 +85,21 @@ class myCombineCNN:
         # print(formerLayerSF.shape)
         formerLayerSF = self.fullInputLayer.BP(formerLayerSF)
         # print(formerLayerSF)
-        # print(formerLayerSF.shape)
+
+        splitStep = int(formerLayerSF.shape[1] / self.convCoreNum1)
+
+        for i in range(self.convCoreNum1):
+            SFtemp = formerLayerSF[:, i * splitStep : (i + 1) * splitStep].copy()
+            # print(SFtemp.shape)
+            self.poolingSFlist.append(SFtemp)
+
+        formerLayerSF = list()
+        for i in range(self.convCoreNum1):
+            formerLayerSF.append(self.poolingCoreList1[i].BP(self.poolingSFlist[i]))
+
+        # print(formerLayerSF[0])
+
+        
 
 
 

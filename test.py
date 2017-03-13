@@ -250,6 +250,6 @@ print(z)
 z[:] = 1
 print(y)
 z = y.transpose()
-print(y[1:,:].T)
+print(y[1:2,:])
 
 
