@@ -258,8 +258,28 @@ k = np.array([[ 0.06751567,  -0.11925088,  0.25435214,  0.54253786],
 # print(z)
 # print(z.shape)
 
-for sample in x:
-  print(sample)
-  print()
+# for sample in x:
+#   print(sample)
+#   print()
+#
+# print((2,3,4)==(2,3,4))
+#
+# x = 2 * np.ones((10, 4, 2))
+# y = 3 * np.ones((10, 2))
+#
+# # for a,b in x,y:    wrong way to iterate
+# #   print(a)
+# #   print(b)
+# print(x[1])
+# print(x[1,:,:])
+x = np.ones((2,2))
+ls = list()
+for i in range(5):
+    ls.append(x)
+
+print(ls)
+y = np.array(ls)
+print(y)
+print(y.shape)
 
 

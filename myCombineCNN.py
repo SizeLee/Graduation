@@ -33,8 +33,8 @@ class myCombineCNN:
 
         self.predictResult = None
 
-        self.poolingSFlist = list()
-        self.convSFlist = list()
+        self.poolingSFlist = None
+        self.convSFlist = None
 
 
     def trainCNN(self, trainRound, trainRate):
@@ -45,7 +45,7 @@ class myCombineCNN:
 
         for i in range(self.convCoreNum1):
 
-            convCoreTemp = convLayer.convLayerCore(inputDataX, inputDataX.shape[2])
+            convCoreTemp = convLayer.convLayerCore(inputDataX, inputDataX.shape[2], trainRate)
             self.convCoreList1.append(convCoreTemp)
             self.convCoreOut1.append(convCoreTemp.calculate())
 
@@ -80,14 +80,17 @@ class myCombineCNN:
         # print(self.data.DataTrainY.shape)
 
         # todo BP process
+        ####### full connect BP
         formerLayerSF = self.fullMidLayer.BP()
         # print(formerLayerSF)
         # print(formerLayerSF.shape)
         formerLayerSF = self.fullInputLayer.BP(formerLayerSF)
         # print(formerLayerSF)
 
+        ####### max pooling layer BP
         splitStep = int(formerLayerSF.shape[1] / self.convCoreNum1)
 
+        self.poolingSFlist = list()
         for i in range(self.convCoreNum1):
             SFtemp = formerLayerSF[:, i * splitStep : (i + 1) * splitStep].copy()
             # print(SFtemp.shape)
@@ -99,15 +102,19 @@ class myCombineCNN:
 
         # print(formerLayerSF[0])
 
-        formerLayerSFTemp = list()
-        for i in range(self.convCoreNum1):
-            formerLayerSFTemp.append(self.combPoolingLayer1.BP(formerLayerSF[i]))
+        ######################    combine feature BP
 
-        formerLayerSF = formerLayerSFTemp
+        self.convSFlist = list()
+        for i in range(self.convCoreNum1):
+            self.convSFlist.append(self.combPoolingLayer1.BP(formerLayerSF[i]))
 
         # print(formerLayerSF)
         # print(formerLayerSF[0].shape)
         # print(len(formerLayerSF))
+
+        #####################
+        for i in range(self.convCoreNum1):
+            self.convCoreList1[i].BP(self.convSFlist[i])
 
 
 
