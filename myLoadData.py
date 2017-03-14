@@ -115,6 +115,10 @@ class loadIris:
         self.DataValXLoss = self.lossSimulator.lossSimulate(self.DataValX)
         self.DataTestXLoss = self.lossSimulator.lossSimulate(self.DataTestX)
 
+        self.DataTrainX = self.DataTrainXLoss
+        self.DataValX = self.DataValXLoss
+        self.DataTestX = self.DataTestXLoss
+
 
 
 # loadiris = loadIris()

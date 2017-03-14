@@ -10,6 +10,7 @@ import costFunc
 #for test
 import myLoadData
 import dataLossSimulator
+import accuracyEvaluate
 
 
 class myCombineCNN:
@@ -129,10 +130,13 @@ class myCombineCNN:
             print(costFunc.costCal(self.predictResult, self.data.DataTrainY))
             self.backPropagation()
 
+        print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTrainY))
+
         self.forwardPropagation(self.combConvLayer1.makeCombineData(self.data.DataTestX))
         print(self.predictResult)
         print(costFunc.costCal(self.predictResult, self.data.DataTestY))
         print(self.data.DataTestY)
+        print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTestY))
 
 
     def forwardPropagation(self, inputDataX = None):
@@ -220,7 +224,7 @@ class myCombineCNN:
     #todo def runCNN(self):
 
 
-irisDATA = myLoadData.loadIris()
+irisDATA = myLoadData.loadIris(0.3, -1)
 mcnn = myCombineCNN(irisDATA, 2, 5, 4)
 mcnn.trainCNN(300,0.1)
 

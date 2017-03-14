@@ -290,4 +290,7 @@ else:
     print(0)
 
 print(k[1:3,:].shape)
-
+a = np.array([[1, 2, 3], [2, 4, 3]])
+b = np.array([1, 3, 3])
+print(np.argmax(a, axis=1))
+print(np.argmax(a, axis=0))
