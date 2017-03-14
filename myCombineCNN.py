@@ -127,8 +127,12 @@ class myCombineCNN:
         ###################### start train in round
         for trainTime in range(trainRound-1):
             self.forwardPropagation()
-            print(costFunc.costCal(self.predictResult, self.data.DataTrainY))
             self.backPropagation()
+            trainCost = costFunc.costCal(self.predictResult, self.data.DataTrainY)
+            # self.forwardPropagation(self.combConvLayer1.makeCombineData(self.data.DataValX))
+            # valCost = costFunc.costCal(self.predictResult, self.data.DataValY)
+            # print(trainCost, valCost)
+            print(trainCost)
 
         print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTrainY))
 
@@ -226,7 +230,7 @@ class myCombineCNN:
 
 irisDATA = myLoadData.loadIris(0.3, -1)
 mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-mcnn.trainCNN(300,0.1)
+mcnn.trainCNN(2000,0.1)
 
 
 
