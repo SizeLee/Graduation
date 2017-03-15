@@ -230,7 +230,7 @@ class myCombineCNN:
 
 irisDATA = myLoadData.loadIris(0.3, -1)
 mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-mcnn.trainCNN(2000,0.1)
+mcnn.trainCNN(1600,0.1)
 
 
 
