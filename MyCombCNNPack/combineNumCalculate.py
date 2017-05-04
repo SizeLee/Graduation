@@ -12,5 +12,6 @@ def combineNumCal(all, take):
 
     return int(Anum/TakeAnum)
 
-# print(combineNumCal(6, 4))
-# print(combineNumCal(10, 4))
+if __name__ == '__main__':
+    print(combineNumCal(6, 4))
+    print(combineNumCal(10, 4))

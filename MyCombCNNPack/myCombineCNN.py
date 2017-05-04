@@ -1,16 +1,8 @@
 import numpy as np
-import copy
-import convLayer
-import maxPoolingLayer
-import fullConnect
-import combineFeature
-import combineNumCalculate
-import costFunc
 
-#for test
 import myLoadData
-import dataLossSimulator
-import accuracyEvaluate
+from MyCombCNNPack import accuracyEvaluate, combineFeature, combineNumCalculate, costFunc, convLayer, fullConnect, \
+    maxPoolingLayer
 
 
 class myCombineCNN:
@@ -77,7 +69,7 @@ class myCombineCNN:
 
         self.fullInputLayer = fullConnect.fullConnectInputLayer(self.allConnectData, trainRate)
         self.midACData = self.fullInputLayer.calculate()
-        self.fullMidLayer = fullConnect.fullConnectMidLayer(self.midACData,self.data.DataTrainY,trainRate)
+        self.fullMidLayer = fullConnect.fullConnectMidLayer(self.midACData, self.data.DataTrainY, trainRate)
         self.predictResult = self.fullMidLayer.calculate()
 
         # print(self.predictResult)
@@ -227,10 +219,10 @@ class myCombineCNN:
 
     #todo def runCNN(self):
 
-
-irisDATA = myLoadData.loadIris(0.3, -1)
-mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-mcnn.trainCNN(1600,0.1)
+if __name__ == '__main__':
+    irisDATA = myLoadData.loadIris(0.3, -1)
+    mcnn = myCombineCNN(irisDATA, 2, 5, 4)
+    mcnn.trainCNN(1600,0.1)
 
 
 

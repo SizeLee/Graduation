@@ -1,6 +1,6 @@
 import numpy as np
-import activationFunction
-import myLoadData
+
+from MyCombCNNPack import activationFunction
 
 
 class fullConnectInputLayer:

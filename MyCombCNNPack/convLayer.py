@@ -1,7 +1,7 @@
 import numpy as np
-import activationFunction
 import myLoadData
-import combineFeature
+from MyCombCNNPack import activationFunction, combineFeature
+
 
 class convLayerCore:
     def __init__(self, InputDataX, wLength, trainRate):
@@ -78,11 +78,11 @@ class convLayerCore:
 
         return formerLayerSF
 
-
-# irisData = myLoadData.loadIris()
-# comb = combineFeature.combineFeature(4,2)
-# inputDataX = comb.makeCombineData(irisData.DataTestX)
-# testConvCore = convLayerCore(inputDataX, inputDataX.shape[2])
-# convOut = testConvCore.calculate()
-# print(convOut)
-# print(inputDataX)
+if __name__ == '__main__':
+    irisData = myLoadData.loadIris()
+    comb = combineFeature.combineFeature(4,2)
+    inputDataX = comb.makeCombineData(irisData.DataTestX)
+    testConvCore = convLayerCore(inputDataX, inputDataX.shape[2])
+    convOut = testConvCore.calculate()
+    print(convOut)
+    print(inputDataX)

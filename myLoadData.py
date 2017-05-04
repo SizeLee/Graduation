@@ -19,7 +19,7 @@ class loadIris:
     dataName = 'Iris'
 
     def __init__(self, lossRate = 0, setlossValue = 0):
-        fp = open('iris.txt','r')
+        fp = open('..\\iris.txt','r') #todo change the way open file
 
         self.DataX = None
         self.DataTrainX = None
