@@ -4,21 +4,26 @@ from MyCombCNNPack import combineFeature, convLayer
 
 class maxPoolingLayerCore:
 
-    def __init__(self, inputDataX):
+    def __init__(self):
 
-        self.__inputDataX = inputDataX.copy()
-        self.__poolingSize = inputDataX.shape[2]
+        self.__inputDataX = None
+        self.__poolingSize = None
         self.__poolingPosition = None
         self.__outputDataX = None
 
     def calculate(self, newInputDataX = None):
         if newInputDataX is not None:
-            if self.__inputDataX.shape[1] != newInputDataX.shape[1]:
+            if self.__inputDataX is not None and self.__inputDataX.shape[1] != newInputDataX.shape[1]:
                 print('Error in pooling layer: new data is with wrong size\n')
                 exit(1)  # todo throw out error
             else:
                 self.__inputDataX = newInputDataX.copy()  ####iterate newdata into max pooling layer
 
+        if self.__inputDataX is None:
+            print('Error in maxPooling layer: no exist data in maxPooling layer core for calculation\n')
+            exit(1) #todo throw out error
+
+        self.__poolingSize = self.__inputDataX.shape[2]
         self.__outputDataX = np.max(self.__inputDataX, axis=2) ##obtain max of each row in each sample, it's max pooling
         self.__poolingPosition = np.argmax(self.__inputDataX, axis=2) ##obtain taking value's position, for latter BP process
         # print(self.__outputDataX)
@@ -32,6 +37,10 @@ class maxPoolingLayerCore:
 
     #todo def BP function
     def BP(self, sensitivityFactor):
+
+        if self.__inputDataX is None:
+            print('Error in maxPooling layer BP: no exist input data in maxPooling layer core for BP\n')
+            exit(1) #todo throw out error
 
         if sensitivityFactor.shape[0] != self.__inputDataX.shape[0] \
                 or sensitivityFactor.shape[1] != self.__inputDataX.shape[1]:

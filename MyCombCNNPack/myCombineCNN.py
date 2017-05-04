@@ -42,9 +42,9 @@ class myCombineCNN:
         self.convCoreOut1 = list()
         for i in range(self.convCoreNum1):
 
-            convCoreTemp = convLayer.convLayerCore(inputDataX, inputDataX.shape[2], trainRate)
+            convCoreTemp = convLayer.convLayerCore(inputDataX.shape[2], trainRate)
             self.convCoreList1.append(convCoreTemp)
-            self.convCoreOut1.append(convCoreTemp.calculate())
+            self.convCoreOut1.append(convCoreTemp.calculate(inputDataX))
 
         self.combPoolingLayer1 = combineFeature.combineFeature(combKindNumConv1, self.combineNumPooling1)
         combKindNumPooling1 = combineNumCalculate.combineNumCal(combKindNumConv1, self.combineNumPooling1)
@@ -53,9 +53,9 @@ class myCombineCNN:
         for i in range(self.convCoreNum1):
 
             inputPoolingData = self.combPoolingLayer1.makeCombineData(self.convCoreOut1[i])
-            poolingCoreTemp = maxPoolingLayer.maxPoolingLayerCore(inputPoolingData)
+            poolingCoreTemp = maxPoolingLayer.maxPoolingLayerCore()
             self.poolingCoreList1.append(poolingCoreTemp)
-            self.poolingCoreOut1.append(poolingCoreTemp.calculate())
+            self.poolingCoreOut1.append(poolingCoreTemp.calculate(inputPoolingData))
 
         for i in range(self.convCoreNum1):
 
@@ -67,10 +67,10 @@ class myCombineCNN:
         # print(self.allConnectData)
         # print(self.allConnectData.shape)
 
-        self.fullInputLayer = fullConnect.fullConnectInputLayer(self.allConnectData, trainRate)
-        self.midACData = self.fullInputLayer.calculate()
-        self.fullMidLayer = fullConnect.fullConnectMidLayer(self.midACData, self.data.DataTrainY, trainRate)
-        self.predictResult = self.fullMidLayer.calculate()
+        self.fullInputLayer = fullConnect.fullConnectInputLayer(self.allConnectData.shape, trainRate)
+        self.midACData = self.fullInputLayer.calculate(self.allConnectData)
+        self.fullMidLayer = fullConnect.fullConnectMidLayer(self.midACData.shape, self.data.DataTrainY.shape[1], trainRate)
+        self.predictResult = self.fullMidLayer.calculate(self.midACData)
 
         # print(self.predictResult)
         # print(self.data.DataTrainY)
@@ -79,7 +79,7 @@ class myCombineCNN:
 
         # todo BP process
         ####### full connect BP
-        formerLayerSF = self.fullMidLayer.BP()
+        formerLayerSF = self.fullMidLayer.BP(self.data.DataTrainY)
         # print(formerLayerSF)
         # print(formerLayerSF.shape)
         formerLayerSF = self.fullInputLayer.BP(formerLayerSF)
@@ -180,7 +180,7 @@ class myCombineCNN:
 
     def backPropagation(self):
         ####### full connect BP
-        formerLayerSF = self.fullMidLayer.BP()
+        formerLayerSF = self.fullMidLayer.BP() ###existed ylabel , no need for pass ylabel
         # print(formerLayerSF)
         # print(formerLayerSF.shape)
         formerLayerSF = self.fullInputLayer.BP(formerLayerSF)
@@ -222,7 +222,7 @@ class myCombineCNN:
 if __name__ == '__main__':
     irisDATA = myLoadData.loadIris(0.3, -1)
     mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-    mcnn.trainCNN(1600,0.1)
+    mcnn.trainCNN(1600,0.2)
 
 
 

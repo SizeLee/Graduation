@@ -4,19 +4,19 @@ from MyCombCNNPack import activationFunction, combineFeature
 
 
 class convLayerCore:
-    def __init__(self, InputDataX, wLength, trainRate):
+    def __init__(self, wLength, trainRate):
         self.__w = None
         self.__inputDataX = None
         self.__outputDataX = None
         self.__outputDataAct = None
-        sampleNum = InputDataX.shape[0]
-        combineNum = InputDataX.shape[1]
-        combineFeatureNum = InputDataX.shape[2]
-        if wLength!=combineFeatureNum:
-            print('Error in convlayer.Wrong conv core length\n')
-            exit(1)#todo throw error
+        # sampleNum = InputDataX.shape[0]
+        # combineNum = InputDataX.shape[1]
+        # combineFeatureNum = InputDataX.shape[2]
+        # if wLength!=combineFeatureNum:
+        #     print('Error in convlayer.Wrong conv core length\n')
+        #     exit(1)#todo throw error
 
-        self.__inputDataX = InputDataX.copy()
+        # self.__inputDataX = InputDataX.copy()
 
         self.__w = 0.24 * np.random.rand(wLength, 1) - 0.12
         # print(self.__w)
@@ -26,11 +26,15 @@ class convLayerCore:
 
     def calculate(self, newInputDataX = None):
         if newInputDataX is not None:
-            if self.__inputDataX.shape[1] != newInputDataX.shape[1]:
+            if self.__inputDataX is not None and self.__inputDataX.shape[1] != newInputDataX.shape[1]:
                 print('Error in conv layer: new data is with wrong size\n')
                 exit(1) #todo throw out error
             else:
                 self.__inputDataX = newInputDataX.copy()    ####iterate newdata into convLayer
+
+        if self.__inputDataX is None:
+            print('Error in conv layer: no exist data in conv layer core for calculation\n')
+            exit(1) #todo throw out error
 
         self.__outputDataX = np.dot(self.__inputDataX, self.__w)
         # print(np.dot(self.__inputDataX, self.__w).shape)
@@ -48,9 +52,17 @@ class convLayerCore:
     #todo def BP function
 
     def BP(self, sensitivityFactor):
+        if self.__outputDataX is None:
+            print('Error in conv layer BP: no exist output data in conv layer core for BP\n')
+            exit(1) #todo throw out error
+
         if sensitivityFactor.shape != self.__outputDataX.shape:
             print('Error in convLayer BP: input wrong sensitivity factor\n')
             exit(1) #todo throw out
+
+        if self.__inputDataX is None:
+            print('Error in conv layer BP: no exist input data in conv layer core for calculation\n')
+            exit(1) #todo throw out error
 
         sampleNum = sensitivityFactor.shape[0]
 
