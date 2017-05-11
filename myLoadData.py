@@ -123,7 +123,10 @@ class loadIris:
 class loadData:
 
     def __init__(self, filedirectory, lossRate = 0., setlossValue = 0.):
-        fp = open(filedirectory,'r') #todo change the way open file
+        try:
+            fp = open(filedirectory,'r')
+        except FileNotFoundError as e:
+            raise e
 
         self.DataX = None
         self.DataTrainX = None

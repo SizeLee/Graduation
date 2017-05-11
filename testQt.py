@@ -348,51 +348,64 @@
 #     sys.exit(app.exec_())
 
 
-# import sys
-# from PyQt5.QtWidgets import (QMainWindow, QTextEdit,
-#                              QAction, QFileDialog, QApplication)
-# from PyQt5.QtGui import QIcon
-#
-#
-# class Example(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-#
-#         self.initUI()
-#
-#     def initUI(self):
-#         self.textEdit = QTextEdit()
-#         self.setCentralWidget(self.textEdit)
-#         self.statusBar()
-#
-#         openFile = QAction(QIcon('open.png'), 'Open', self)
-#         openFile.setShortcut('Ctrl+O')
-#         openFile.setStatusTip('Open new File')
-#         openFile.triggered.connect(self.showDialog)
-#
-#         menubar = self.menuBar()
-#         fileMenu = menubar.addMenu('&File')
-#         fileMenu.addAction(openFile)
-#
-#         self.setGeometry(300, 300, 350, 300)
-#         self.setWindowTitle('File dialog')
-#         self.show()
-#
-#     def showDialog(self):
-#         fname = QFileDialog.getOpenFileName(self, 'Open file')
-#
-#         if fname[0]:
-#             f = open(fname[0], 'r')
-#
-#             with f:
-#                 data = f.read()
-#                 self.textEdit.setText(data)
-#
-#
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ex = Example()
-#     sys.exit(app.exec_())
+import sys
+from PyQt5.QtWidgets import (QMainWindow, QTextEdit,
+                             QAction, QFileDialog, QApplication)
+from PyQt5.QtGui import QIcon
+
+
+class Example(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.textEdit = QTextEdit()
+        self.setCentralWidget(self.textEdit)
+        self.statusBar()
+
+        openFile = QAction(QIcon('open.png'), 'Open', self)
+        openFile.setShortcut('Ctrl+O')
+        openFile.setStatusTip('Open new File')
+        openFile.triggered.connect(self.showDialog)
+
+        saveFile = QAction('Save', self)
+        saveFile.triggered.connect(self.saveFile)
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(openFile)
+        fileMenu.addAction(saveFile)
+
+        self.setGeometry(300, 300, 350, 300)
+        self.setWindowTitle('File dialog')
+        self.show()
+
+    def showDialog(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file')
+
+        if fname[0]:
+            # print(fname[0])
+            f = open(fname[0], 'r')
+
+            with f:
+                data = f.read()
+                self.textEdit.setText(data)
+
+    def saveFile(self):
+        fname, ok = QFileDialog.getSaveFileName(self, 'Save file', '.\\model.txt', 'Text files (*.txt)')
+        if ok:
+            with open(fname, 'w+') as f:
+                f.write('234')
+
+
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
 
 # import sys
 # from PyQt5.QtWidgets import QWidget, QCheckBox, QApplication
@@ -655,42 +668,91 @@
 #     sys.exit(app.exec_())
 
 
-import sys
-from PyQt5.QtWidgets import (QWidget, QLabel,
-                             QComboBox, QApplication)
+# import sys
+# from PyQt5.QtWidgets import (QWidget, QLabel,
+#                              QComboBox, QApplication)
+#
+#
+# class Example(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#
+#         self.initUI()
+#
+#     def initUI(self):
+#         self.lbl = QLabel("Ubuntu", self)
+#
+#         combo = QComboBox(self)
+#         combo.addItem("Ubuntu")
+#         combo.addItem("Mandriva")
+#         combo.addItem("Fedora")
+#         combo.addItem("Arch")
+#         combo.addItem("Gentoo")
+#
+#         combo.move(50, 50)
+#         self.lbl.move(50, 150)
+#
+#         combo.activated[str].connect(self.onActivated)
+#
+#         self.setGeometry(300, 300, 300, 200)
+#         self.setWindowTitle('QComboBox')
+#         self.show()
+#
+#     def onActivated(self, text):
+#         self.lbl.setText(text)
+#         self.lbl.adjustSize()
+#
+#
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ex = Example()
+#     sys.exit(app.exec_())
 
-
-class Example(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        self.initUI()
-
-    def initUI(self):
-        self.lbl = QLabel("Ubuntu", self)
-
-        combo = QComboBox(self)
-        combo.addItem("Ubuntu")
-        combo.addItem("Mandriva")
-        combo.addItem("Fedora")
-        combo.addItem("Arch")
-        combo.addItem("Gentoo")
-
-        combo.move(50, 50)
-        self.lbl.move(50, 150)
-
-        combo.activated[str].connect(self.onActivated)
-
-        self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('QComboBox')
-        self.show()
-
-    def onActivated(self, text):
-        self.lbl.setText(text)
-        self.lbl.adjustSize()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec_())
+# import sys
+# from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QFrame,
+#                              QSplitter, QStyleFactory, QApplication)
+# from PyQt5.QtCore import Qt
+#
+#
+# class Example(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#
+#         self.initUI()
+#
+#     def initUI(self):
+#         hbox = QHBoxLayout(self)
+#
+#         topleft = QFrame(self)
+#         topleft.setFrameShape(QFrame.StyledPanel)
+#
+#         topright = QFrame(self)
+#         topright.setFrameShape(QFrame.StyledPanel)
+#
+#         bottom = QFrame(self)
+#         bottom.setFrameShape(QFrame.StyledPanel)
+#
+#         splitter1 = QSplitter(Qt.Horizontal)
+#         splitter1.addWidget(topleft)
+#         splitter1.addWidget(topright)
+#
+#         splitter2 = QSplitter(Qt.Vertical)
+#         splitter2.addWidget(splitter1)
+#         splitter2.addWidget(bottom)
+#
+#         hbox.addWidget(splitter2)
+#         self.setLayout(hbox)
+#
+#         self.setGeometry(300, 300, 300, 200)
+#         self.setWindowTitle('QSplitter')
+#         self.show()
+#
+#     def onChanged(self, text):
+#         self.lbl.setText(text)
+#         self.lbl.adjustSize()
+#
+#
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ex = Example()
+#     sys.exit(app.exec_())
