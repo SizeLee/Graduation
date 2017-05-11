@@ -68,6 +68,10 @@ class MyMainWindow(QMainWindow):
         ###### training module ########
         trainingModule = QVBoxLayout()
 
+        self.setModelParametersButton = QPushButton('Model Parameters')
+        self.setModelParametersButton.setFont(QFont('微软雅黑', 16))
+        # self.setTrainingParametersButton = QPushButton('Trainning Parameters')
+        # self.setTrainingParametersButton.setFont(QFont('微软雅黑', 16))
         self.trainingButton = QPushButton('Training')
         self.trainingButton.setFont(QFont('微软雅黑', 16))
         self.saveModelButton = QPushButton('Save Model')
@@ -85,6 +89,8 @@ class MyMainWindow(QMainWindow):
 
         trainingModule.addStretch(1)
         trainingModule.addLayout(labelbox)
+        trainingModule.addStretch(1)
+        trainingModule.addWidget(self.setModelParametersButton)
         trainingModule.addStretch(1)
         trainingModule.addWidget(self.trainingButton)
         trainingModule.addStretch(1)
@@ -161,6 +167,8 @@ class MyMainWindow(QMainWindow):
         ###### training module ########
         trainingModuleT = QVBoxLayout()
 
+        self.setModelParametersButtonT = QPushButton('Model Parameters')
+        self.setModelParametersButtonT.setFont(QFont('微软雅黑', 16))
         self.trainingButtonT = QPushButton('Training')
         self.trainingButtonT.setFont(QFont('微软雅黑', 16))
         self.saveModelButtonT = QPushButton('Save Model')
@@ -178,6 +186,8 @@ class MyMainWindow(QMainWindow):
 
         trainingModuleT.addStretch(1)
         trainingModuleT.addLayout(labelbox)
+        trainingModuleT.addStretch(1)
+        trainingModuleT.addWidget(self.setModelParametersButtonT)
         trainingModuleT.addStretch(1)
         trainingModuleT.addWidget(self.trainingButtonT)
         trainingModuleT.addStretch(1)
