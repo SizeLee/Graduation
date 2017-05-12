@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QFr
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor
 import myLoadData
-from UIPack import setLossParameterDialog
+from UIPack import setLossParameterDialog, showDataWidget
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -257,6 +257,8 @@ class MyMainWindow(QMainWindow):
         self.dataFileChooseButtonT.clicked.connect(self.chooseData)
         self.dataLossSimulateSettingButton.clicked.connect(self.setLossParameter)
         self.dataLossSimulateSettingButtonT.clicked.connect(self.setLossParameter)
+        self.dataShowButton.clicked.connect(self.showData)
+        self.dataShowButtonT.clicked.connect(self.showData)
 
 
     def chooseData(self):
@@ -313,6 +315,17 @@ class MyMainWindow(QMainWindow):
 
         # print(self.dataLossRate)
         # print(self.dataSetLossValue)
+        return
+
+    def showData(self):
+        if self.sender() is self.dataShowButton:
+            # print(1)
+            self.showDataW = showDataWidget.ShowDataWidget('combine-CNN数据展示', self, 'New')
+
+        elif self.sender() is self.dataShowButtonT:
+            # print(1)
+            self.showDataW = showDataWidget.ShowDataWidget('traditional NN数据展示', self, 'Tra')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

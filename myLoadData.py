@@ -151,19 +151,19 @@ class loadData:
         sampleCount = 0
         self.sampleList = []
 
-        yClassDic = dict()
-        yClassNum = 0
+        self.yClassDic = dict()
+        self.yClassNum = 0
         for line in fp:
             line = line.rstrip('\n')
             dataStrList = line.split(',')
-            if dataStrList[-1] not in yClassDic:
-                yClassDic[dataStrList[-1]] = yClassNum
-                yClassNum = yClassNum + 1
+            if dataStrList[-1] not in self.yClassDic:
+                self.yClassDic[dataStrList[-1]] = self.yClassNum
+                self.yClassNum = self.yClassNum + 1
 
-        # print(yClassDic)
-        # print(len(yClassDic))
+        # print(self.yClassDic)
+        # print(len(self.yClassDic))
         ylabelVecTemplate = []
-        for i in range(len(yClassDic)):
+        for i in range(len(self.yClassDic)):
             ylabelVecTemplate.append(0)
 
         # print(ylabelVecTemplate)
@@ -175,9 +175,9 @@ class loadData:
             dataStrList = line.split(',')
             linetemp = []
             for data in dataStrList:
-                if data in yClassDic:
+                if data in self.yClassDic:
                     ylabelVec = ylabelVecTemplate.copy()
-                    ylabelVec[yClassDic[data]] = 1
+                    ylabelVec[self.yClassDic[data]] = 1
                     # print(ylabelVec)
                     linetemp.append(ylabelVec)
                 elif linetemp == []:
