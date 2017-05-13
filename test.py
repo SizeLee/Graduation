@@ -300,3 +300,10 @@ import pylab
 print(str(np.array([[1,0,0], [2,0,0]])[1, :]))
 x = np.array([[1,0,0], [2,0,0]])
 print(x.argmax(1))
+
+l = [0] * 5
+print(l)
+
+d = dict()
+d[1] = 0
+print(d)

@@ -259,6 +259,7 @@ class MyMainWindow(QMainWindow):
         self.dataLossSimulateSettingButtonT.clicked.connect(self.setLossParameter)
         self.dataShowButton.clicked.connect(self.showData)
         self.dataShowButtonT.clicked.connect(self.showData)
+        self.dataPreProcessButtonT.clicked.connect(self.preProcess)
 
 
     def chooseData(self):
@@ -326,6 +327,16 @@ class MyMainWindow(QMainWindow):
             # print(1)
             self.showDataW = showDataWidget.ShowDataWidget('traditional NN数据展示', self, 'Tra')
 
+    def preProcess(self):
+        if self.dataFor['Tra'] is None:
+            reply = QMessageBox.question(self, '数据错误', '没有加载数据，无法预处理',
+                                         QMessageBox.Yes, QMessageBox.Yes)
+        else:
+            self.dataFor['Tra'].MeanPreProcess()
+            reply = QMessageBox.question(self, 'Message', 'PreProcess succeed!',
+                                         QMessageBox.Yes, QMessageBox.Yes)
+
+        return
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

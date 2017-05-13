@@ -244,7 +244,52 @@ class loadData:
         self.DataValX = self.DataValXLoss
         self.DataTestX = self.DataTestXLoss
 
+
+    def MeanPreProcess(self):
+        featureMeanFor = dict()
+        validNumFor = dict()
+        ylabel = self.DataTrainY.argmax(1)
+
+        for i in range(self.yClassNum):
+            featureMeanFor[i] = [0.] * self.DataTrainX.shape[1]
+            validNumFor[i] = [0] * self.DataTrainX.shape[1]
+
+        for feature in range(self.DataTrainX.shape[1]):
+            for sample in range(self.DataTrainX.shape[0]):
+                if self.DataTrainX[sample, feature] != self.setLossValue:
+                    featureMeanFor[ylabel[sample]][feature] += self.DataTrainX[sample, feature]
+                    validNumFor[ylabel[sample]][feature] += 1
+
+        for yClass in range(self.yClassNum):
+            for feature in range(self.DataTrainX.shape[1]):
+                featureMeanFor[yClass][feature] /= validNumFor[yClass][feature]
+
+        # print(featureMeanFor)
+
+        ########### preprocess training data set
+        for sample in range(self.DataTrainX.shape[0]):
+            for feature in range(self.DataTrainX.shape[1]):
+                if self.DataTrainX[sample, feature] == self.setLossValue:
+                    self.DataTrainX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+
+        ###########preprocess validation data set
+        ylabel = self.DataValY.argmax(1)
+        for sample in range(self.DataValX.shape[0]):
+            for feature in range(self.DataValX.shape[1]):
+                if self.DataValX[sample, feature] == self.setLossValue:
+                    self.DataValX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+
+        #########preprocess test data set
+        ylabel = self.DataTestY.argmax(1)
+        for sample in range(self.DataTestX.shape[0]):
+            for feature in range(self.DataTestX.shape[1]):
+                if self.DataTestX[sample, feature] == self.setLossValue:
+                    self.DataTestX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+
+
+
 if __name__ == '__main__':
     # loadiris = loadIris()
     myloadData = loadData('iris.txt', 0.3, -1.)
+    myloadData.MeanPreProcess()
     print(myloadData.DataTrainX, '\n', myloadData.DataTrainY)

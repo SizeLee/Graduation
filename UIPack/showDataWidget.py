@@ -48,9 +48,12 @@ class ShowDataWidget(QWidget):
         else:
             ####label for training data set##########
             layout.addStretch(1)
+            labelbox = QHBoxLayout()
             label = QLabel('Trainning Data Set')
             label.setFont(QFont('微软雅黑', 12))
-            layout.addWidget(label)
+            labelbox.addWidget(label)
+            labelbox.addStretch(1)
+            layout.addLayout(labelbox)
 
             ####list for training data set##############
             self.trainDataShowListWidget = QListWidget()
@@ -69,7 +72,7 @@ class ShowDataWidget(QWidget):
                 content = []
                 content.append('%5s' % str(i + 1))
                 for j in range(self.featureNum):
-                    content.append('%-8s' % str(self.parentW.dataFor[self.senderName].DataTrainX[i, j]))
+                    content.append('%-8.2f' % self.parentW.dataFor[self.senderName].DataTrainX[i, j])
 
                 content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                 content.append('%-15s' % str(self.parentW.dataFor[self.senderName].DataTrainY[i, :]))
@@ -84,11 +87,23 @@ class ShowDataWidget(QWidget):
             layout.addWidget(self.trainDataShowListWidget)
             layout.addStretch(1)
 
+            #######set percentage label of training data in label box
+            classPercentageDic = self.calPercentage(self.labelDic, self.labelIndex)
+            for eachKey in classPercentageDic:
+                label = QLabel('%s: %.2f%%' % (eachKey, (classPercentageDic[eachKey] * 100)))
+                label.setFont(QFont('微软雅黑', 12))
+                labelbox.addWidget(label)
+                labelbox.addStretch(1)
+
+
             #########label for validation data set
             layout.addStretch(1)
+            labelbox = QHBoxLayout()
             label = QLabel('Validation Data Set')
             label.setFont(QFont('微软雅黑', 12))
-            layout.addWidget(label)
+            labelbox.addWidget(label)
+            labelbox.addStretch(1)
+            layout.addLayout(labelbox)
 
             #########list for validation data set
             self.valDataShowListWidget = QListWidget()
@@ -107,7 +122,7 @@ class ShowDataWidget(QWidget):
                 content = []
                 content.append('%5s' % str(i + 1))
                 for j in range(self.featureNum):
-                    content.append('%-8s' % str(self.parentW.dataFor[self.senderName].DataValX[i, j]))
+                    content.append('%-8.2f' % self.parentW.dataFor[self.senderName].DataValX[i, j])
 
                 content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                 content.append('%-15s' % str(self.parentW.dataFor[self.senderName].DataValY[i, :]))
@@ -122,11 +137,23 @@ class ShowDataWidget(QWidget):
             layout.addWidget(self.valDataShowListWidget)
             layout.addStretch(1)
 
+            #######set percentage label of validation data in label box
+            classPercentageDic = self.calPercentage(self.labelDic, self.labelIndex)
+            for eachKey in classPercentageDic:
+                label = QLabel('%s: %.2f%%' % (eachKey, (classPercentageDic[eachKey] * 100)))
+                label.setFont(QFont('微软雅黑', 12))
+                labelbox.addWidget(label)
+                labelbox.addStretch(1)
+
+
             ######label for test data set#####
             layout.addStretch(1)
+            labelbox = QHBoxLayout()
             label = QLabel('Test Data Set')
             label.setFont(QFont('微软雅黑', 12))
-            layout.addWidget(label)
+            labelbox.addWidget(label)
+            labelbox.addStretch(1)
+            layout.addLayout(labelbox)
 
             ######list for test data set###
             self.testDataShowListWidget = QListWidget()
@@ -145,7 +172,7 @@ class ShowDataWidget(QWidget):
                 content = []
                 content.append('%5s' % str(i + 1))
                 for j in range(self.featureNum):
-                    content.append('%-8s' % str(self.parentW.dataFor[self.senderName].DataTestX[i, j]))
+                    content.append('%-8.2f' % self.parentW.dataFor[self.senderName].DataTestX[i, j])
 
                 content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                 content.append('%-15s' % str(self.parentW.dataFor[self.senderName].DataTestY[i, :]))
@@ -160,7 +187,13 @@ class ShowDataWidget(QWidget):
             layout.addWidget(self.testDataShowListWidget)
             layout.addStretch(1)
 
-
+            #######set percentage label of test data in label box
+            classPercentageDic = self.calPercentage(self.labelDic, self.labelIndex)
+            for eachKey in classPercentageDic:
+                label = QLabel('%s: %.2f%%' % (eachKey, (classPercentageDic[eachKey] * 100)))
+                label.setFont(QFont('微软雅黑', 12))
+                labelbox.addWidget(label)
+                labelbox.addStretch(1)
 
 
         self.setLayout(layout)
@@ -177,8 +210,28 @@ class ShowDataWidget(QWidget):
         firstLine.append('%-25s' % 'Label')
         firstLine.append('%-15s' % 'Label Vector')
 
-        print(firstLine)
+        # print(firstLine)
         return firstLine
+
+    def calPercentage(self, labelDic, labelIndex):
+        classPercentageDic = {k: v for v, k in labelDic.items()}
+        for eachKey in classPercentageDic:
+            classPercentageDic[eachKey] = 0
+        # print(classPercentageDic)
+
+        sumSample = 0
+        for each in labelIndex:
+            classPercentageDic[labelDic[each]] += 1
+            sumSample += 1
+        # print(classPercentageDic)
+
+        for eachKey in classPercentageDic:
+            classPercentageDic[eachKey] /= float(sumSample)
+        # print(classPercentageDic)
+
+        return classPercentageDic
+
+
 
 
 
