@@ -1,0 +1,1 @@
+####before training start, all the parameters and data should be check suitable.

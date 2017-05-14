@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QFr
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor
 import myLoadData
-from UIPack import setLossParameterDialog, showDataWidget
+from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -29,6 +29,11 @@ class MyMainWindow(QMainWindow):
         self.dataLossRate['Tra'] = 0.
         self.dataSetLossValue['Tra'] = 0.
 
+        self.combineNumConv = 1
+        self.convCoreNum = 1
+        self.combineNumPooling = 1
+
+        self.fullConnectOutInRate = 0.5
 
         self.initUI()
         self.initConnect()
@@ -261,7 +266,11 @@ class MyMainWindow(QMainWindow):
         self.dataShowButtonT.clicked.connect(self.showData)
         self.dataPreProcessButtonT.clicked.connect(self.preProcess)
 
+        self.setModelParametersButton.clicked.connect(self.setModelParameters)
+        self.setModelParametersButtonT.clicked.connect(self.setModelParameters)
 
+
+############ data load module #####################
     def chooseData(self):
         if self.sender() is self.dataFileChooseButton:
             self.fname['New'], ok = QFileDialog.getOpenFileName(self, 'Open file', '..', 'Text files (*.txt)')
@@ -326,6 +335,7 @@ class MyMainWindow(QMainWindow):
         elif self.sender() is self.dataShowButtonT:
             # print(1)
             self.showDataW = showDataWidget.ShowDataWidget('traditional NN数据展示', self, 'Tra')
+        return
 
     def preProcess(self):
         if self.dataFor['Tra'] is None:
@@ -337,6 +347,16 @@ class MyMainWindow(QMainWindow):
                                          QMessageBox.Yes, QMessageBox.Yes)
 
         return
+
+    ############## training module #################
+    def setModelParameters(self):
+        if self.sender() is self.setModelParametersButton:
+            # print(1)
+            self.setModelParaW = setModelParametersDialog.setLossParameterDialog('combine-CNN模型参数设置', self, 'New')
+
+        elif self.sender() is self.setModelParametersButtonT:
+            self.setModelParaW = setModelParametersDialog.setLossParameterDialog('traditional NN模型参数设置', self, 'Tra')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

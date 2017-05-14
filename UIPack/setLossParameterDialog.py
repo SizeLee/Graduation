@@ -75,7 +75,7 @@ class setLossParameterDialog(QWidget):
         if not self.isNumber(self.setLossRateEdit.text()):
             errorMessage = errorMessage + '缺失率无效输入\n'
         elif float(self.setLossRateEdit.text()) > 1. or float(self.setLossRateEdit.text()) < 0.:
-            errorMessage = errorMessage + '缺失绿输入范围错误\n'
+            errorMessage = errorMessage + '缺失率输入范围错误\n'
 
         if not self.isNumber(self.setLossValueEdit.text()):
             errorMessage = errorMessage + '缺失标示值无效输入\n'
@@ -122,7 +122,7 @@ class setLossParameterDialog(QWidget):
 
 
     def isNumber(self, str):
-        regex = re.compile(r'^[-+]?[0-9]+\.?[0-9]*')
+        regex = re.compile(r'^[-+]?[0-9]+\.?[0-9]*$')
         result = regex.match(str)
 
         return result
