@@ -10,6 +10,7 @@ class setLossParameterDialog(QWidget):
         self.Title = Title
         self.parentW = parentW
         self.senderName = senderName
+        self.maxInt = 2147483647
         self.initUI()
         self.initConnect()
 
@@ -109,23 +110,23 @@ class setLossParameterDialog(QWidget):
             errorMessage = ''
             if not self.isInteger(self.setCombineNumConvEdit.text()):
                 errorMessage = errorMessage + '卷积层特征组合大小(卷积核大小)无效输入\n'
-            elif int(self.setCombineNumConvEdit.text()) <= 0:
+            elif int(self.setCombineNumConvEdit.text()) <= 0 or int(self.setCombineNumConvEdit.text()) >= self.maxInt:
                 errorMessage = errorMessage + '卷积层特征组合大小(卷积核大小)输入范围错误\n'
 
             if not self.isInteger(self.setConvCoreNumEdit.text()):
                 errorMessage = errorMessage + '卷积核数量无效输入\n'
-            elif int(self.setConvCoreNumEdit.text()) <= 0:
+            elif int(self.setConvCoreNumEdit.text()) <= 0 or int(self.setConvCoreNumEdit.text()) >= self.maxInt:
                 errorMessage = errorMessage + '卷积核数量输入范围错误\n'
 
             if not self.isInteger(self.setCombineNumPoolingEdit.text()):
                 errorMessage = errorMessage + '池化层特征组合大小(池化核大小)无效输入\n'
-            elif int(self.setCombineNumPoolingEdit.text()) <= 0:
+            elif int(self.setCombineNumPoolingEdit.text()) <= 0 or int(self.setCombineNumPoolingEdit.text()) >= self.maxInt:
                 errorMessage = errorMessage + '池化层特征组合大小(池化核大小)输入范围错误\n'
 
             if errorMessage != '':
                 errorMessage = errorMessage + '请重新输入参数'
-                reply = QMessageBox.question(self, '输入错误', errorMessage,
-                                             QMessageBox.Yes, QMessageBox.Yes)
+                reply = QMessageBox.information(self, '输入错误', errorMessage,
+                                                QMessageBox.Yes, QMessageBox.Yes)
 
                 self.setCombineNumConvEdit.setText(str(self.parentW.combineNumConv))
                 self.setConvCoreNumEdit.setText(str(self.parentW.convCoreNum))
@@ -141,14 +142,14 @@ class setLossParameterDialog(QWidget):
         elif self.senderName == 'Tra':
             errorMessage = ''
             if not self.isNumber(self.setFullConnectOutInRateEdit.text()):
-                errorMessage = errorMessage + '缺失率无效输入\n'
+                errorMessage = errorMessage + '全连接(隐层/输入层)大小比例无效输入\n'
             elif float(self.setFullConnectOutInRateEdit.text()) <= 0.:
-                errorMessage = errorMessage + '缺失绿输入范围错误\n'
+                errorMessage = errorMessage + '全连接(隐层/输入层)大小比例输入范围错误\n'
 
             if errorMessage != '':
                 errorMessage = errorMessage + '请重新输入参数'
-                reply = QMessageBox.question(self, '输入错误', errorMessage,
-                                             QMessageBox.Yes, QMessageBox.Yes)
+                reply = QMessageBox.information(self, '输入错误', errorMessage,
+                                                QMessageBox.Yes, QMessageBox.Yes)
 
                 self.setFullConnectOutInRateEdit.setText(str(self.parentW.fullConnectOutInRate))
                 return
@@ -157,7 +158,7 @@ class setLossParameterDialog(QWidget):
                 self.parentW.fullConnectOutInRate = float(self.setFullConnectOutInRateEdit.text())
 
 
-        reply = QMessageBox.question(self, 'Message', "Parameters' saved successfully",
+        reply = QMessageBox.information(self, 'Message', "Parameters' saved successfully",
                                          QMessageBox.Yes, QMessageBox.Yes)
         self.close()
         return

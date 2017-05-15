@@ -82,8 +82,8 @@ class setLossParameterDialog(QWidget):
 
         if errorMessage != '':
             errorMessage = errorMessage + '请重新输入参数'
-            reply = QMessageBox.question(self, '输入错误', errorMessage,
-                                         QMessageBox.Yes, QMessageBox.Yes)
+            reply = QMessageBox.information(self, '输入错误', errorMessage,
+                                            QMessageBox.Yes, QMessageBox.Yes)
 
             self.setLossRateEdit.setText(str(self.parentW.dataLossRate[self.senderName]))
             self.setLossValueEdit.setText(str(self.parentW.dataSetLossValue[self.senderName]))
@@ -99,8 +99,8 @@ class setLossParameterDialog(QWidget):
                                                                             self.parentW.dataSetLossValue[self.senderName])
 
                 except FileNotFoundError as e:
-                    reply = QMessageBox.question(self, 'Message', "Data file doesn't exist, parameters' saved",
-                                                 QMessageBox.Yes, QMessageBox.Yes)
+                    reply = QMessageBox.information(self, 'Message', "Data file doesn't exist, parameters' saved",
+                                                    QMessageBox.Yes, QMessageBox.Yes)
                     # print(self.parentW.dataFor[self.senderName].DataTrainX)
                     self.close()
                     return
@@ -115,8 +115,8 @@ class setLossParameterDialog(QWidget):
             # else:
             #     print(self.parentW.dataFor['Tra'])
 
-            reply = QMessageBox.question(self, 'Message', "Parameters' saved successfully",
-                                         QMessageBox.Yes, QMessageBox.Yes)
+            reply = QMessageBox.information(self, 'Message', "Parameters' saved successfully",
+                                            QMessageBox.Yes, QMessageBox.Yes)
             self.close()
             return
 
