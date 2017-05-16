@@ -4,6 +4,7 @@ import theano
 import numpy as np
 from io import BytesIO
 import pylab
+import sys
 
 # x = np.array([[1,2,3],[4,5,6]])
 # y = np.asarray([[1,2,3],[4,5,6]])
@@ -297,13 +298,28 @@ import pylab
 #
 # print(float('1.'))
 
-print(str(np.array([[1,0,0], [2,0,0]])[1, :]))
-x = np.array([[1,0,0], [2,0,0]])
-print(x.argmax(1))
+# print(str(np.array([[1,0,0], [2,0,0]])[1, :]))
+# x = np.array([[1,0,0], [2,0,0]])
+# print(x.argmax(1))
+#
+# l = [0] * 5
+# print(l)
+#
+# d = dict()
+# d[1] = 0
+# print(d)
 
-l = [0] * 5
-print(l)
+a = 0.
+b = 0.
+print(a<=b)
 
-d = dict()
-d[1] = 0
-print(d)
+class A:
+    pass
+
+def func(sdf):
+    sdf1 = sdf
+    return sdf1
+
+x = A()
+y = func(x)
+print(x is y)

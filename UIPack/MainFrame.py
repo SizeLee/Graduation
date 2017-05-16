@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QFr
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor
 import myLoadData
-from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog
+from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog, TrainingWidget
+from MyCombCNNPack import combineNumCalculate
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -29,11 +30,16 @@ class MyMainWindow(QMainWindow):
         self.dataLossRate['Tra'] = 0.
         self.dataSetLossValue['Tra'] = 0.
 
-        self.combineNumConv = 1
-        self.convCoreNum = 1
-        self.combineNumPooling = 1
+        self.combineNumConv = 2
+        self.convCoreNum = 5
+        self.combineNumPooling = 4
 
         self.fullConnectOutInRate = 0.5
+
+        self.mcbcnn = None
+
+        self.trainingW = None
+        self.trainingWT = None
 
         self.initUI()
         self.initConnect()
@@ -268,6 +274,8 @@ class MyMainWindow(QMainWindow):
 
         self.setModelParametersButton.clicked.connect(self.setModelParameters)
         self.setModelParametersButtonT.clicked.connect(self.setModelParameters)
+        self.trainingButton.clicked.connect(self.training)
+        self.trainingButtonT.clicked.connect(self.training)
 
 
 ############ data load module #####################
@@ -356,6 +364,48 @@ class MyMainWindow(QMainWindow):
 
         elif self.sender() is self.setModelParametersButtonT:
             self.setModelParaW = setModelParametersDialog.setLossParameterDialog('traditional NN模型参数设置', self, 'Tra')
+
+    def training(self):
+        if self.sender() is self.trainingButton:
+            if self.trainingW is not None:
+                self.trainingW.hide()
+                # print(self.trainingW)
+                self.trainingW.show()
+                return
+            senderName = 'New'
+
+        elif self.sender() is self.trainingButtonT:
+            if self.trainingWT is not None:
+                self.trainingWT.hide()
+                self.trainingWT.show()
+
+            senderName = 'Tra'
+
+        if self.dataFor[senderName] is None:
+            reply = QMessageBox.question(self, '数据错误', '没有加载数据，无法训练',
+                                         QMessageBox.Yes, QMessageBox.Yes)
+            return
+
+        elif senderName == 'New':
+            if self.dataFor[senderName].DataTrainX.shape[1] < self.combineNumConv:
+                reply = QMessageBox.question(self, '参数错误', '卷积层组合(卷积核)大小大于数据集特征数量',
+                                             QMessageBox.Yes, QMessageBox.Yes)
+                return
+
+            if combineNumCalculate.combineNumCal(self.dataFor[senderName].DataTrainX.shape[1], self.combineNumConv)\
+                  < self.combineNumPooling:
+                reply = QMessageBox.question(self, '参数错误', '池化层组合(池化核)大小大于卷积层输出特征向量维度',
+                                             QMessageBox.Yes, QMessageBox.Yes)
+                return
+
+            print(self.trainingW)
+            self.trainingW = TrainingWidget.trainningWidget('combine-CNN训练', self, senderName)
+
+        elif senderName == 'Tra':
+            self.trainingWT = TrainingWidget.trainningWidget('traditional NN训练', self, senderName)
+
+        return
+
 
 
 if __name__ == '__main__':

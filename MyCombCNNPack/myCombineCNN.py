@@ -32,8 +32,9 @@ class myCombineCNN:
 
         self.trainInitializeFlag = False
 
+        self.__trainingProgress = 0
 
-    def trainCNN(self, trainRound, trainRate):
+    def trainCNN(self, trainRound, trainRate, trainingContinueFlag):
 
         self.combConvLayer1 = combineFeature.combineFeature(self.data.DataX.shape[1], self.combineNumConv1)
         combKindNumConv1 = combineNumCalculate.combineNumCal(self.data.DataX.shape[1], self.combineNumConv1)
@@ -117,14 +118,22 @@ class myCombineCNN:
         self.trainInitializeFlag = True
 
         ###################### start train in round
-        for trainTime in range(trainRound-1):
+        for trainTime in range(trainRound - 1):
+            if not trainingContinueFlag[0]:
+                break
+            # print('1')
             self.forwardPropagation()
+            # print('mid')
             self.backPropagation()
+            # print('2')
             trainCost = costFunc.costCal(self.predictResult, self.data.DataTrainY)
             # self.forwardPropagation(self.combConvLayer1.makeCombineData(self.data.DataValX))
             # valCost = costFunc.costCal(self.predictResult, self.data.DataValY)
             # print(trainCost, valCost)
             print(trainCost)
+            self.__trainingProgress = (trainTime + 1) / float(trainRound)
+            #     progressBar.setValue(np.ceil((trainTime + 1) / float(trainRound) * 100))
+
 
         print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTrainY))
 
@@ -215,15 +224,20 @@ class myCombineCNN:
         for i in range(self.convCoreNum1):
             self.convCoreList1[i].BP(self.convSFlist[i])
 
+    def getTrainingProgress(self):
+        return self.__trainingProgress
 
 
     #todo def runCNN(self):
 
 if __name__ == '__main__':
-    irisDATA = myLoadData.loadIris(0.3, -1)
-    mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-    mcnn.trainCNN(1600,0.2)
+    # irisDATA = myLoadData.loadIris(0.3, -1)
+    # mcnn = myCombineCNN(irisDATA, 2, 5, 4)
+    # mcnn.trainCNN(1600,0.2, [True])
 
+    irisDATA = myLoadData.loadData('..\\iris.txt', 0.3, -1)
+    mcnn = myCombineCNN(irisDATA, 2, 5, 4)
+    mcnn.trainCNN(1600,0.2, [True])
 
 
 
