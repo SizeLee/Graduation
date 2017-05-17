@@ -37,8 +37,10 @@ class trainningWidget(QWidget):
         self.trainingPicAccessLock.release()
 
         if self.senderName == 'New':
+            self.parentW.presentModelName.setText('Training Model')
             self.parentW.trainingW = None
         elif self.senderName == 'Tra':
+            self.parentW.presentModelNameT.setText('Training Model')
             self.parentW.trainingWT = None
 
 
