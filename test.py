@@ -5,6 +5,7 @@ import numpy as np
 from io import BytesIO
 import pylab
 import sys
+import matplotlib.pyplot as plt
 
 # x = np.array([[1,2,3],[4,5,6]])
 # y = np.asarray([[1,2,3],[4,5,6]])
@@ -309,17 +310,43 @@ import sys
 # d[1] = 0
 # print(d)
 
-a = 0.
-b = 0.
-print(a<=b)
+# a = 0.
+# b = 0.
+# print(a<=b)
+#
+# class A:
+#     pass
+#
+# def func(sdf):
+#     sdf1 = sdf
+#     return sdf1
+#
+# x = A()
+# y = func(x)
+# print(x is y)
 
-class A:
-    pass
+x = np.linspace(-4, 4, 30)
+y = np.sin(x)
 
-def func(sdf):
-    sdf1 = sdf
-    return sdf1
+plt.figure(figsize=(4,4))
+plt.plot(x, y, '--*b')
+plt.savefig('123.png')
 
-x = A()
-y = func(x)
-print(x is y)
+x = np.linspace(0, 10, 1000)
+y = np.sin(x)
+z = np.cos(x**2)
+
+plt.figure(figsize=(8,4))
+plt.plot(x,y,label="$sin(x)$",color="red",linewidth=2)
+plt.plot(x,z,"b--",label="$cos(x^2)$")
+plt.xlabel("Time(s)")
+plt.ylabel("Volt")
+plt.title("PyPlot First Example")
+plt.ylim(-1.2,1.2)
+plt.legend()
+plt.savefig('234.png')
+# plt.show()
+
+plt.figure()
+plt.plot([1,2,3], [7,5,6])
+plt.show()

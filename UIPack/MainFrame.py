@@ -398,7 +398,7 @@ class MyMainWindow(QMainWindow):
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
 
-            print(self.trainingW)
+            # print(self.trainingW)
             self.trainingW = TrainingWidget.trainningWidget('combine-CNN训练', self, senderName)
 
         elif senderName == 'Tra':

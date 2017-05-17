@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 import myLoadData
 from MyCombCNNPack import accuracyEvaluate, combineFeature, combineNumCalculate, costFunc, convLayer, fullConnect, \
     maxPoolingLayer
@@ -34,7 +34,7 @@ class myCombineCNN:
 
         self.__trainingProgress = 0
 
-    def trainCNN(self, trainRound, trainRate, trainingContinueFlag):
+    def trainCNN(self, trainRound, trainRate, trainingContinueFlag, trainPicAccessLock):
 
         self.combConvLayer1 = combineFeature.combineFeature(self.data.DataX.shape[1], self.combineNumConv1)
         combKindNumConv1 = combineNumCalculate.combineNumCal(self.data.DataX.shape[1], self.combineNumConv1)
@@ -117,6 +117,10 @@ class myCombineCNN:
 
         self.trainInitializeFlag = True
 
+        trainCost = costFunc.costCal(self.predictResult, self.data.DataTrainY)
+        trainCostList = []
+        trainCostList.append(trainCost)
+        trainTimeList = [0]
         ###################### start train in round
         for trainTime in range(trainRound - 1):
             if not trainingContinueFlag[0]:
@@ -131,8 +135,21 @@ class myCombineCNN:
             # valCost = costFunc.costCal(self.predictResult, self.data.DataValY)
             # print(trainCost, valCost)
             print(trainCost)
+            trainCostList.append(trainCost)
+            trainTimeList.append(trainTime + 1)
             self.__trainingProgress = (trainTime + 1) / float(trainRound)
             #     progressBar.setValue(np.ceil((trainTime + 1) / float(trainRound) * 100))
+            if (trainTime + 1) % 5 == 0:
+                plt.figure(figsize=(8,5))
+                plt.plot(trainTimeList, trainCostList, 'b-')
+                plt.xlabel('Training times')
+                plt.ylabel('Training cost')
+                plt.xlim(0, trainRound + 2)
+                plt.ylim(0, 1.6 * trainCostList[0])
+                trainPicAccessLock.acquire()
+                plt.savefig('TrainingCost.png')
+                trainPicAccessLock.release()
+                plt.close()
 
 
         print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTrainY))

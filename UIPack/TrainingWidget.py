@@ -20,6 +20,7 @@ class trainningWidget(QWidget):
         self.maxInt = 2147483647
         self.threadRunPermission = [True]
         self.listenProgressPermission = [True]
+        self.trainingPicAccessLock = threading.Lock()
 
         self.initUI()
         self.initConnect()
@@ -27,6 +28,14 @@ class trainningWidget(QWidget):
     def closeEvent(self, QCloseEvent):
         self.threadRunPermission[0] = False
         self.listenProgressPermission[0] = False
+
+        scalePic = QPixmap('start.jpg')
+        scalePic = scalePic.scaled(self.trainingCostPicture.size())
+        # self.trainingCostPicture.setPixmap(scalePic)
+        self.trainingPicAccessLock.acquire()
+        scalePic.save('TrainingCost.png')
+        self.trainingPicAccessLock.release()
+
         if self.senderName == 'New':
             self.parentW.trainingW = None
         elif self.senderName == 'Tra':
@@ -46,7 +55,7 @@ class trainningWidget(QWidget):
         picturelayout = QHBoxLayout()
 
         self.trainingCostPicture = QLabel()
-        self.trainingCostPicture.resize(self.wlength, self.whigh - 300)
+        self.trainingCostPicture.resize(self.wlength, 0.625 * self.whigh)
         scalePic = QPixmap('start.jpg')
         scalePic = scalePic.scaled(self.trainingCostPicture.size())
         self.trainingCostPicture.setPixmap(scalePic)
@@ -111,6 +120,9 @@ class trainningWidget(QWidget):
             progress = int(self.parentW.mcbcnn.getTrainingProgress() * 100 + 0.5)
             # print(progress)
             self.progressBar.setText('%d%%' % progress)
+            self.trainingPicAccessLock.acquire()
+            self.trainingCostPicture.setPixmap(QPixmap('TrainingCost.png'))
+            self.trainingPicAccessLock.release()
             if progress >= 100:
                 self.button.setText('Finished')
                 break
@@ -153,7 +165,7 @@ class trainningWidget(QWidget):
 
                 trainingThread = threading.Thread(target=self.parentW.mcbcnn.trainCNN,
                                                 args=(self.trainingTimes, self.trainingRate,
-                                                      self.threadRunPermission))
+                                                      self.threadRunPermission, self.trainingPicAccessLock))
                 trainingThread.setDaemon(True)
                 trainingThread.start()
 
@@ -168,10 +180,22 @@ class trainningWidget(QWidget):
             self.threadRunPermission[0] = False
             self.listenProgressPermission[0] = False
             self.sender().setText('Start')
+            scalePic = QPixmap('start.jpg')
+            scalePic = scalePic.scaled(self.trainingCostPicture.size())
+            # self.trainingCostPicture.setPixmap(scalePic)
+            self.trainingPicAccessLock.acquire()
+            scalePic.save('TrainingCost.png')
+            self.trainingPicAccessLock.release()
 
         elif self.sender().text() == 'Finished':
             self.progressBar.setText('%d%%' % 0)
             self.button.setText('Start')
+            scalePic = QPixmap('start.jpg')
+            scalePic = scalePic.scaled(self.trainingCostPicture.size())
+            self.trainingCostPicture.setPixmap(scalePic)
+            self.trainingPicAccessLock.acquire()
+            scalePic.save('TrainingCost.png')
+            self.trainingPicAccessLock.release()
 
     def threadFinishWork(self):
         self.button.setText('Start')
