@@ -325,28 +325,35 @@ import matplotlib.pyplot as plt
 # y = func(x)
 # print(x is y)
 
-x = np.linspace(-4, 4, 30)
-y = np.sin(x)
-
-plt.figure(figsize=(4,4))
-plt.plot(x, y, '--*b')
-plt.savefig('123.png')
-
-x = np.linspace(0, 10, 1000)
-y = np.sin(x)
-z = np.cos(x**2)
-
-plt.figure(figsize=(8,4))
-plt.plot(x,y,label="$sin(x)$",color="red",linewidth=2)
-plt.plot(x,z,"b--",label="$cos(x^2)$")
-plt.xlabel("Time(s)")
-plt.ylabel("Volt")
-plt.title("PyPlot First Example")
-plt.ylim(-1.2,1.2)
-plt.legend()
-plt.savefig('234.png')
+# x = np.linspace(-4, 4, 30)
+# y = np.sin(x)
+#
+# plt.figure(figsize=(4,4))
+# plt.plot(x, y, '--*b')
+# plt.savefig('123.png')
+#
+# x = np.linspace(0, 10, 1000)
+# y = np.sin(x)
+# z = np.cos(x**2)
+#
+# plt.figure(figsize=(8,4))
+# plt.plot(x,y,label="$sin(x)$",color="red",linewidth=2)
+# plt.plot(x,z,"b--",label="$cos(x^2)$")
+# plt.xlabel("Time(s)")
+# plt.ylabel("Volt")
+# plt.title("PyPlot First Example")
+# plt.ylim(-1.2,1.2)
+# plt.legend()
+# plt.savefig('234.png')
+# # plt.show()
+#
+# plt.figure()
+# plt.plot([1,2,3], [7,5,6])
 # plt.show()
 
-plt.figure()
-plt.plot([1,2,3], [7,5,6])
-plt.show()
+w = 0.24 * np.random.rand(10, 1) - 0.12
+y = w.tolist()
+y[0][0]=1
+print(type(y),y,w)
+z = np.array(y)
+print(z)

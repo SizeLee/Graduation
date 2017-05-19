@@ -394,7 +394,7 @@ class Example(QMainWindow):
                 self.textEdit.setText(data)
 
     def saveFile(self):
-        fname, ok = QFileDialog.getSaveFileName(self, 'Save file', '.\\model.txt', 'Text files (*.txt)')
+        fname, ok = QFileDialog.getSaveFileName(self, 'Save file', '.\\model.json', 'Json files (*.json)')
         if ok:
             with open(fname, 'w+') as f:
                 f.write('234')

@@ -23,6 +23,11 @@ class convLayerCore:
         self.__leakyRate = 0.5
         self.__trainRate = trainRate
 
+    def getWeight(self):
+        return self.__w.tolist()
+
+    def setWeight(self, wList):
+        self.__w = np.array(wList)
 
     def calculate(self, newInputDataX = None):
         if newInputDataX is not None:

@@ -1,4 +1,5 @@
 # python file compile cache
+/.idea/
 /__pycache__/
 /MyCombCNNPack/__pycache__/
 /UIPack/__pycache__/

@@ -276,6 +276,10 @@ class MyMainWindow(QMainWindow):
         self.setModelParametersButtonT.clicked.connect(self.setModelParameters)
         self.trainingButton.clicked.connect(self.training)
         self.trainingButtonT.clicked.connect(self.training)
+        self.saveModelButton.clicked.connect(self.saveModel)
+        self.saveModelButtonT.clicked.connect(self.saveModel)
+        self.loadModelButton.clicked.connect(self.loadModel)
+        self.loadModelButtonT.clicked.connect(self.loadModel)
 
 
 ############ data load module #####################
@@ -382,19 +386,19 @@ class MyMainWindow(QMainWindow):
             senderName = 'Tra'
 
         if self.dataFor[senderName] is None:
-            reply = QMessageBox.question(self, '数据错误', '没有加载数据，无法训练',
+            reply = QMessageBox.information(self, '数据错误', '没有加载数据，无法训练',
                                          QMessageBox.Yes, QMessageBox.Yes)
             return
 
         elif senderName == 'New':
             if self.dataFor[senderName].DataTrainX.shape[1] < self.combineNumConv:
-                reply = QMessageBox.question(self, '参数错误', '卷积层组合(卷积核)大小大于数据集特征数量',
+                reply = QMessageBox.information(self, '参数错误', '卷积层组合(卷积核)大小大于数据集特征数量',
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
 
             if combineNumCalculate.combineNumCal(self.dataFor[senderName].DataTrainX.shape[1], self.combineNumConv)\
                   < self.combineNumPooling:
-                reply = QMessageBox.question(self, '参数错误', '池化层组合(池化核)大小大于卷积层输出特征向量维度',
+                reply = QMessageBox.information(self, '参数错误', '池化层组合(池化核)大小大于卷积层输出特征向量维度',
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
 
@@ -406,6 +410,47 @@ class MyMainWindow(QMainWindow):
 
         return
 
+    def saveModel(self):
+        if self.sender() is self.saveModelButton:
+            if self.mcbcnn is None:
+                reply = QMessageBox.information(self, '模型错误', '模型不存在',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+            else:
+                fname, ok = QFileDialog.getSaveFileName(self, 'Save Model', '..\\myCombineCNN.json', 'Json files (*.json)')
+                if ok:
+                    succeed = self.mcbcnn.saveModel(fname)
+                    if succeed:
+                        reply = QMessageBox.information(self, '保存结果', '模型保存成功',
+                                                        QMessageBox.Yes, QMessageBox.Yes)
+                    else:
+                        reply = QMessageBox.information(self, '保存结果', '模型保存失败',
+                                                        QMessageBox.Yes, QMessageBox.Yes)
+                else:
+                    reply = QMessageBox.information(self, '保存结果', '模型保存失败',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
+
+        elif self.sender() is self.saveModelButtonT:
+            pass
+
+    def loadModel(self):
+        if self.sender() is self.loadModelButton:
+            fname, ok = QFileDialog.getOpenFileName(self, 'Load Model', '..',
+                                                    'Json files (*.json)')
+            if ok:
+                succeed = self.mcbcnn.setModel(fname)
+                if succeed:
+                    reply = QMessageBox.information(self, '设置结果', '模型设置成功',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
+                else:
+                    reply = QMessageBox.information(self, '设置结果', '模型设置失败',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
+            else:
+                reply = QMessageBox.information(self, '设置结果', '模型设置失败',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+
+        elif self.sender() is self.loadModelButtonT:
+            pass
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import json, threading
 import myLoadData
 from MyCombCNNPack import accuracyEvaluate, combineFeature, combineNumCalculate, costFunc, convLayer, fullConnect, \
     maxPoolingLayer
@@ -13,9 +14,9 @@ class myCombineCNN:
         self.convCoreNum1 = convCoreNum1
         self.convCoreList1 = list()
         self.convCoreOut1 = None
+
         self.poolingCoreList1 = list()
         self.poolingCoreOut1 = None
-
         self.combineNumPooling1 = combineNumPooling1
         self.combPoolingLayer1 = None
 
@@ -34,12 +35,115 @@ class myCombineCNN:
 
         self.__trainingProgress = 0
 
+    def __modelExist(self):
+        if self.combConvLayer1 is None or \
+            not self.convCoreList1 or \
+            not self.poolingCoreList1 or \
+            self.combPoolingLayer1 is None or\
+            self.fullInputLayer is None or\
+            self.fullMidLayer is None:
+            return False
+        else:
+            return True
+
+
+    def saveModel(self, fname):
+        if not self.__modelExist():
+            return False
+        model = {}
+        model['convLayer'] = {}
+        model['convLayer']['combConv'] = {}
+        model['convLayer']['combConv']['all'] = self.data.DataX.shape[1]
+        model['convLayer']['combConv']['take'] = self.combineNumConv1
+        model['convLayer']['convCore'] = {}
+        model['convLayer']['convCore']['Num'] = self.convCoreNum1
+        model['convLayer']['convCore']['weight'] = []
+
+        for i in range(self.convCoreNum1):
+            model['convLayer']['convCore']['weight'].append(self.convCoreList1[i].getWeight())
+
+        model['poolingLayer'] = {}
+        model['poolingLayer']['combPooling'] = {}
+        midCombNum = combineNumCalculate.combineNumCal(self.data.DataX.shape[1], self.combineNumConv1)
+        model['poolingLayer']['combPooling']['all'] = midCombNum
+        model['poolingLayer']['combPooling']['take'] = self.combineNumPooling1
+
+        model['fullConnect'] = {}
+        model['fullConnect']['inputLayer'] = {}
+        model['fullConnect']['inputLayer']['inputDataShape'] = []
+        model['fullConnect']['inputLayer']['inputDataShape'].append(self.data.DataTrainX.shape[0])
+        inputDataShape1 = combineNumCalculate.combineNumCal(midCombNum, self.combineNumPooling1) * self.convCoreNum1
+        model['fullConnect']['inputLayer']['inputDataShape'].append(inputDataShape1)
+        model['fullConnect']['inputLayer']['weight'] = self.fullInputLayer.getWeight()
+
+        model['fullConnect']['midLayer'] = {}
+        model['fullConnect']['midLayer']['midInputDataShape'] = []
+        model['fullConnect']['midLayer']['midInputDataShape'].append(self.data.DataTrainX.shape[0])
+        model['fullConnect']['midLayer']['midInputDataShape'].append(int(np.floor(0.5 * inputDataShape1)))
+        model['fullConnect']['midLayer']['yclassNum'] = self.data.DataTrainY.shape[1]
+        model['fullConnect']['midLayer']['weight'] = self.fullMidLayer.getWeight()
+
+        try:
+            fp = open(fname, 'w')
+            json.dump(model, fp)
+            fp.close()
+
+        except FileNotFoundError:
+            return False
+
+        return True
+
+    def setModel(self, fname):
+        try:
+            fp = open(fname, 'r')
+            model = json.load(fp)
+            fp.close()
+
+        except FileNotFoundError:
+            return False
+
+        self.combConvLayer1 = combineFeature.combineFeature(model['convLayer']['combConv']['all'],
+                                                            model['convLayer']['combConv']['take'])
+        self.convCoreList1 = list()
+        for i in range(model['convLayer']['convCore']['Num']):
+
+            convCoreTemp = convLayer.convLayerCore(1, 0.1)
+            convCoreTemp.setWeight(model['convLayer']['convCore']['weight'][i])
+            self.convCoreList1.append(convCoreTemp)
+
+        self.combPoolingLayer1 = combineFeature.combineFeature(model['poolingLayer']['combPooling']['all'],
+                                                               model['poolingLayer']['combPooling']['take'])
+        self.poolingCoreList1 = list()
+        for i in range(model['convLayer']['convCore']['Num']):
+            poolingCoreTemp = maxPoolingLayer.maxPoolingLayerCore()
+            self.poolingCoreList1.append(poolingCoreTemp)
+
+        self.fullInputLayer = fullConnect.fullConnectInputLayer(model['fullConnect']['inputLayer']['inputDataShape'],
+                                                                0.2)
+        self.fullInputLayer.setWeight(model['fullConnect']['inputLayer']['weight'])
+
+        self.fullMidLayer = fullConnect.fullConnectMidLayer(model['fullConnect']['midLayer']['midInputDataShape'],
+                                                            model['fullConnect']['midLayer']['yclassNum'],
+                                                            0.2)
+        self.fullMidLayer.setWeight(model['fullConnect']['midLayer']['weight'])
+
+        self.trainInitializeFlag = True
+
+        # self.forwardPropagation(self.data.DataTestX)
+        # print(self.predictResult)
+        # print(costFunc.costCal(self.predictResult, self.data.DataTestY))
+        # print(self.data.DataTestY)
+        # print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTestY))
+        return True
+
+
     def trainCNN(self, trainRound, trainRate, trainingContinueFlag, trainPicAccessLock):
 
         self.combConvLayer1 = combineFeature.combineFeature(self.data.DataX.shape[1], self.combineNumConv1)
         combKindNumConv1 = combineNumCalculate.combineNumCal(self.data.DataX.shape[1], self.combineNumConv1)
         inputDataX = self.combConvLayer1.makeCombineData(self.data.DataTrainX)
 
+        self.convCoreList1 = list()
         self.convCoreOut1 = list()
         for i in range(self.convCoreNum1):
 
@@ -50,6 +154,7 @@ class myCombineCNN:
         self.combPoolingLayer1 = combineFeature.combineFeature(combKindNumConv1, self.combineNumPooling1)
         combKindNumPooling1 = combineNumCalculate.combineNumCal(combKindNumConv1, self.combineNumPooling1)
 
+        self.poolingCoreList1 = list()
         self.poolingCoreOut1 = list()
         for i in range(self.convCoreNum1):
 
@@ -154,7 +259,7 @@ class myCombineCNN:
 
         print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTrainY))
 
-        self.forwardPropagation(self.combConvLayer1.makeCombineData(self.data.DataTestX))
+        self.forwardPropagation(self.data.DataTestX)
         print(self.predictResult)
         print(costFunc.costCal(self.predictResult, self.data.DataTestY))
         print(self.data.DataTestY)
@@ -172,6 +277,8 @@ class myCombineCNN:
         # inputDataX = self.combConvLayer1.makeCombineData(self.data.DataTrainX)
         if inputDataX is None:
             inputDataX = self.combConvLayer1.makeCombineData(self.data.DataTrainX)
+        else:
+            inputDataX = self.combConvLayer1.makeCombineData(inputDataX)
 
         self.convCoreOut1 = list()
         for i in range(self.convCoreNum1):
@@ -254,7 +361,7 @@ if __name__ == '__main__':
 
     irisDATA = myLoadData.loadData('..\\iris.txt', 0.3, -1)
     mcnn = myCombineCNN(irisDATA, 2, 5, 4)
-    mcnn.trainCNN(1600,0.2, [True])
+    mcnn.trainCNN(1600,0.2, [True], threading.Lock())
 
 
 

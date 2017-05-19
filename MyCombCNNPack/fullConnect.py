@@ -25,6 +25,11 @@ class fullConnectInputLayer:
         self.__outputDataAct = None
         self.__trainRate = trainRate
 
+    def getWeight(self):
+        return self.__w.tolist()
+
+    def setWeight(self, wList):
+        self.__w = np.array(wList)
 
     def calculate(self, newInputDataX = None):
 
@@ -82,6 +87,12 @@ class fullConnectMidLayer:
         self.__outputYAct = None
         self.__yLabel = None
         self.__trainRate = trainRate
+
+    def getWeight(self):
+        return self.__w.tolist()
+
+    def setWeight(self, wList):
+        self.__w = np.array(wList)
 
     def calculate(self, newInputDataX = None):
 

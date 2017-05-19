@@ -37,6 +37,9 @@ class combineFeature:
         # self.__combineFun(0,0,)
         print(self.__featureCombineMap)
 
+    def getFeatureNum(self):
+        return self.__featureNum
+
     def makeCombineData(self, dataX):
         # print(dataX)
         # print(dataX.shape[0])
@@ -98,8 +101,10 @@ class combineFeature:
         # print(formerSF)
         return formerSF
 
+if __name__ == '__main__':
+    a = combineFeature(4,2)
+    a.outputCombineMap()
 
-##########Test
 # a = combineFeature(4,2)
 # a.outputCombineMap()
 # irisData = myLoadData.loadIris()
