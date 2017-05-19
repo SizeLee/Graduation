@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QVBoxLayout,
     QPushButton, QLabel, QLineEdit, QMessageBox, QProgressBar)
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtCore import pyqtSignal
-from MyCombCNNPack import myCombineCNN
+from MyCombCNNPack import myCombineCNN, traditionalNN
 import re, threading, time
 
 class trainningWidget(QWidget):
@@ -119,7 +119,12 @@ class trainningWidget(QWidget):
 
     def progressChange(self):
         while self.listenProgressPermission[0]:
-            progress = int(self.parentW.mcbcnn.getTrainingProgress() * 100 + 0.5)
+            if self.senderName == 'New':
+                progress = int(self.parentW.mcbcnn.getTrainingProgress() * 100 + 0.5)
+
+            elif self.senderName == 'Tra':
+                progress = int(self.parentW.trann.getTrainingProgress() * 100 + 0.5)
+
             # print(progress)
             self.progressBar.setText('%d%%' % progress)
             self.trainingPicAccessLock.acquire()
@@ -176,7 +181,19 @@ class trainningWidget(QWidget):
                 listenProgressThread.start()
 
             elif self.senderName == 'Tra':
-                pass
+                self.parentW.trann = traditionalNN.traditionalNN(self.parentW.dataFor[self.senderName])
+
+                trainingThread = threading.Thread(target=self.parentW.trann.train,
+                                                  args=(self.trainingTimes, self.trainingRate,
+                                                        self.parentW.fullConnectOutInRate,
+                                                        self.threadRunPermission,
+                                                        self.trainingPicAccessLock))
+                trainingThread.setDaemon(True)
+                trainingThread.start()
+
+                listenProgressThread = threading.Thread(target=self.progressChange)
+                listenProgressThread.setDaemon(True)
+                listenProgressThread.start()
 
         elif self.sender().text() == 'Stop':
             self.threadRunPermission[0] = False

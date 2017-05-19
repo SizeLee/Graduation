@@ -37,6 +37,7 @@ class MyMainWindow(QMainWindow):
         self.fullConnectOutInRate = 0.5
 
         self.mcbcnn = None
+        self.trann = None
 
         self.trainingW = None
         self.trainingWT = None
@@ -417,7 +418,8 @@ class MyMainWindow(QMainWindow):
                                                 QMessageBox.Yes, QMessageBox.Yes)
                 return
             else:
-                fname, ok = QFileDialog.getSaveFileName(self, 'Save Model', '..\\myCombineCNN.json', 'Json files (*.json)')
+                fname, ok = QFileDialog.getSaveFileName(self, 'Save Model', '..\\myCombineCNN.cbcnn.json',
+                                                        'Combine-CNN json files (*.cbcnn.json)')
                 if ok:
                     succeed = self.mcbcnn.saveModel(fname)
                     if succeed:
@@ -431,7 +433,24 @@ class MyMainWindow(QMainWindow):
                                                     QMessageBox.Yes, QMessageBox.Yes)
 
         elif self.sender() is self.saveModelButtonT:
-            pass
+            if self.trann is None:
+                reply = QMessageBox.information(self, '模型错误', '模型不存在',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+            else:
+                fname, ok = QFileDialog.getSaveFileName(self, 'Save Model', '..\\traditionalNN.trann.json',
+                                                        'Traditional NN json files (*.trann.json)')
+                if ok:
+                    succeed = self.trann.saveModel(fname)
+                    if succeed:
+                        reply = QMessageBox.information(self, '保存结果', '模型保存成功',
+                                                        QMessageBox.Yes, QMessageBox.Yes)
+                    else:
+                        reply = QMessageBox.information(self, '保存结果', '模型保存失败',
+                                                        QMessageBox.Yes, QMessageBox.Yes)
+                else:
+                    reply = QMessageBox.information(self, '保存结果', '模型保存失败',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
 
     def loadModel(self):
         if self.sender() is self.loadModelButton:
@@ -450,7 +469,19 @@ class MyMainWindow(QMainWindow):
                                                 QMessageBox.Yes, QMessageBox.Yes)
 
         elif self.sender() is self.loadModelButtonT:
-            pass
+            fname, ok = QFileDialog.getOpenFileName(self, 'Load Model', '..',
+                                                    'Json files (*.json)')
+            if ok:
+                succeed = self.trann.setModel(fname)
+                if succeed:
+                    reply = QMessageBox.information(self, '设置结果', '模型设置成功',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
+                else:
+                    reply = QMessageBox.information(self, '设置结果', '模型设置失败',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
+            else:
+                reply = QMessageBox.information(self, '设置结果', '模型设置失败',
+                                                QMessageBox.Yes, QMessageBox.Yes)
 
 
 if __name__ == '__main__':
