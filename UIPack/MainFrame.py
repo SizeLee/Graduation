@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor
 import myLoadData
 from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog, TrainingWidget
-from MyCombCNNPack import combineNumCalculate
+from MyCombCNNPack import combineNumCalculate, myCombineCNN, traditionalNN
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -455,12 +455,19 @@ class MyMainWindow(QMainWindow):
     def loadModel(self):
         if self.sender() is self.loadModelButton:
             fname, ok = QFileDialog.getOpenFileName(self, 'Load Model', '..',
-                                                    'Json files (*.json)')
+                                                    'Combine-CNN json files (*.cbcnn.json)')
             if ok:
+                if self.mcbcnn is None:
+                    self.mcbcnn = myCombineCNN.myCombineCNN(None, self.combineNumConv, self.convCoreNum, self.combineNumPooling)
+
                 succeed = self.mcbcnn.setModel(fname)
                 if succeed:
                     reply = QMessageBox.information(self, '设置结果', '模型设置成功',
                                                     QMessageBox.Yes, QMessageBox.Yes)
+
+                    modelName = fname.split('/')[-1].split('.')[0]
+                    self.presentModelName.setText(modelName)
+
                 else:
                     reply = QMessageBox.information(self, '设置结果', '模型设置失败',
                                                     QMessageBox.Yes, QMessageBox.Yes)
@@ -470,18 +477,27 @@ class MyMainWindow(QMainWindow):
 
         elif self.sender() is self.loadModelButtonT:
             fname, ok = QFileDialog.getOpenFileName(self, 'Load Model', '..',
-                                                    'Json files (*.json)')
+                                                    'Traditional NN json files (*.trann.json)')
             if ok:
+                if self.trann is None:
+                    self.trann = traditionalNN.traditionalNN(None)
+
                 succeed = self.trann.setModel(fname)
                 if succeed:
                     reply = QMessageBox.information(self, '设置结果', '模型设置成功',
                                                     QMessageBox.Yes, QMessageBox.Yes)
+
+                    modelName = fname.split('/')[-1].split('.')[0]
+                    self.presentModelNameT.setText(modelName)
+
                 else:
                     reply = QMessageBox.information(self, '设置结果', '模型设置失败',
                                                     QMessageBox.Yes, QMessageBox.Yes)
             else:
                 reply = QMessageBox.information(self, '设置结果', '模型设置失败',
                                                 QMessageBox.Yes, QMessageBox.Yes)
+
+        return
 
 
 if __name__ == '__main__':

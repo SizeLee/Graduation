@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from MyCombCNNPack import fullConnect, costFunc, accuracyEvaluate
+from MyCombCNNPack import fullConnect, costFunc, accuracyEvaluate, myException
 import threading, json
 import myLoadData
 
@@ -71,6 +71,23 @@ class traditionalNN:
         print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTestY))
 
 
+    def runTraNN(self, data):
+        if not self.__modelExist():
+            ##no model exist in this instance
+            raise myException.ModelExistException
+
+        if data is not None:
+            self.data = data
+
+        if self.data is None or not isinstance(self.data, myLoadData.loadData):
+            raise myException.DataExistException
+
+        if self.data.DataX.shape[1] != len(self.inputLayer.getWeight()):
+            raise myException.DataModelMatchException
+
+        self.forwardPropagation()
+
+
     def forwardPropagation(self, inputDataX = None):
         if inputDataX is None:
             inputDataX = self.data.DataTrainX
@@ -99,16 +116,16 @@ class traditionalNN:
         model['fullConnect'] = {}
         model['fullConnect']['inputLayer'] = {}
         model['fullConnect']['inputLayer']['inputDataShape'] = []
-        model['fullConnect']['inputLayer']['inputDataShape'].append(self.data.DataTrainX.shape[0])
-        inputDataShape1 = self.data.DataTrainX.shape[1]
+        model['fullConnect']['inputLayer']['inputDataShape'].append(10) ## doesn't matter
+        inputDataShape1 = len(self.inputLayer.getWeight())
         model['fullConnect']['inputLayer']['inputDataShape'].append(inputDataShape1)
         model['fullConnect']['inputLayer']['weight'] = self.inputLayer.getWeight()
 
         model['fullConnect']['midLayer'] = {}
         model['fullConnect']['midLayer']['midInputDataShape'] = []
-        model['fullConnect']['midLayer']['midInputDataShape'].append(self.data.DataTrainX.shape[0])
-        model['fullConnect']['midLayer']['midInputDataShape'].append(int(np.floor(0.5 * inputDataShape1)))##Only about initialization, doesn't matter
-        model['fullConnect']['midLayer']['yclassNum'] = self.data.DataTrainY.shape[1]
+        model['fullConnect']['midLayer']['midInputDataShape'].append(10)###doesn't matter
+        model['fullConnect']['midLayer']['midInputDataShape'].append(len(self.midLayer.getWeight()))##Only about initialization, doesn't matter
+        model['fullConnect']['midLayer']['yclassNum'] = len(self.midLayer.getWeight()[0])
         model['fullConnect']['midLayer']['weight'] = self.midLayer.getWeight()
 
         try:

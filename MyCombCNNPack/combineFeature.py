@@ -40,6 +40,9 @@ class combineFeature:
     def getFeatureNum(self):
         return self.__featureNum
 
+    def getCombineNum(self):
+        return self.__combineNum
+
     def makeCombineData(self, dataX):
         # print(dataX)
         # print(dataX.shape[0])
