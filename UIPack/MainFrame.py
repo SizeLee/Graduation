@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QFr
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor
 import myLoadData
-from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog, TrainingWidget
+from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog, TrainingWidget, showResultWidget
 from MyCombCNNPack import combineNumCalculate, myCombineCNN, traditionalNN
 
 class MyMainWindow(QMainWindow):
@@ -282,6 +282,9 @@ class MyMainWindow(QMainWindow):
         self.loadModelButton.clicked.connect(self.loadModel)
         self.loadModelButtonT.clicked.connect(self.loadModel)
 
+        self.showResultButton.clicked.connect(self.showResult)
+        self.showResultButtonT.clicked.connect(self.showResult)
+
 
 ############ data load module #####################
     def chooseData(self):
@@ -452,6 +455,7 @@ class MyMainWindow(QMainWindow):
                     reply = QMessageBox.information(self, '保存结果', '模型保存失败',
                                                     QMessageBox.Yes, QMessageBox.Yes)
 
+
     def loadModel(self):
         if self.sender() is self.loadModelButton:
             fname, ok = QFileDialog.getOpenFileName(self, 'Load Model', '..',
@@ -498,6 +502,18 @@ class MyMainWindow(QMainWindow):
                                                 QMessageBox.Yes, QMessageBox.Yes)
 
         return
+
+    def showResult(self):
+
+        if self.sender() is self.showResultButton:
+            self.showResultW = showResultWidget.ShowResultWidget('combine-CNN预测结果展示', self, 'New')
+
+        elif self.sender() is self.showResultButtonT:
+            self.showResultW = showResultWidget.ShowResultWidget('traditional NN预测结果展示', self, 'Tra')
+
+        return
+
+
 
 
 if __name__ == '__main__':

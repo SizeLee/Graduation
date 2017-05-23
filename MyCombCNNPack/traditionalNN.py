@@ -18,6 +18,9 @@ class traditionalNN:
     def getTrainingProgress(self):
         return self.__trainingProgress
 
+    def getPredictResult(self):
+        return self.predictResult.copy()
+
     def train(self, trainRound, trainRate, LoutinRate, trainContinueFlag, trainPicAccessLock):
 
         self.inputLayer = fullConnect.fullConnectInputLayer(self.data.DataTrainX.shape, trainRate, LoutinRate)
@@ -71,21 +74,39 @@ class traditionalNN:
         print(accuracyEvaluate.classifyAccuracyRate(self.predictResult, self.data.DataTestY))
 
 
-    def runTraNN(self, data):
+    def runTraNN(self, setChoose = 'Train', data = None):
         if not self.__modelExist():
             ##no model exist in this instance
             raise myException.ModelExistException
 
         if data is not None:
-            self.data = data
+            if isinstance(data, myLoadData.loadData):
+                if data.DataX.shape[1] != len(self.inputLayer.getWeight()):
+                    raise myException.DataModelMatchException
 
-        if self.data is None or not isinstance(self.data, myLoadData.loadData):
-            raise myException.DataExistException
+                self.data = data
+            else:
+                raise myException.DataValidFormatException
 
-        if self.data.DataX.shape[1] != len(self.inputLayer.getWeight()):
-            raise myException.DataModelMatchException
+        else:
+            if self.data is None:
+                raise myException.DataExistException
 
-        self.forwardPropagation()
+            if isinstance(self.data, myLoadData.loadData):
+                raise myException.DataValidFormatException
+
+            if self.data.DataX.shape[1] != len(self.inputLayer.getWeight()):
+                raise myException.DataModelMatchException
+
+
+        if setChoose == 'Train':
+            self.forwardPropagation()
+
+        elif setChoose == 'Test':
+            self.forwardPropagation(self.data.DataTestX)
+
+        elif setChoose == 'Validation':
+            self.forwardPropagation(self.data.DataValX)
 
 
     def forwardPropagation(self, inputDataX = None):

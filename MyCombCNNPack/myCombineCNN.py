@@ -353,22 +353,42 @@ class myCombineCNN:
     def getTrainingProgress(self):
         return self.__trainingProgress
 
+    def getPredictResult(self):
+        return self.predictResult.copy()
 
-    def runCNN(self, data = None):
+
+    def runCNN(self, setChoose = 'Train', data = None):
         if not self.__modelExist():
             ##no model exist in this instance
             raise myException.ModelExistException
 
         if data is not None:
-            self.data = data
+            if isinstance(data, myLoadData.loadData):
+                if data.DataX.shape[1] != self.combConvLayer1.getFeatureNum():
+                    raise myException.DataModelMatchException
 
-        if self.data is None or not isinstance(self.data, myLoadData.loadData):
-            raise myException.DataExistException
+                self.data = data
+            else:
+                raise myException.DataValidFormatException
 
-        if self.data.DataX.shape[1] != self.combConvLayer1.getFeatureNum():
-            raise myException.DataModelMatchException
+        else:
+            if self.data is None:
+                raise myException.DataExistException
 
-        self.forwardPropagation()
+            if isinstance(self.data, myLoadData.loadData):
+                raise myException.DataValidFormatException
+
+            if self.data.DataX.shape[1] != self.combConvLayer1.getFeatureNum():
+                raise myException.DataModelMatchException
+
+        if setChoose == 'Train':
+            self.forwardPropagation()
+
+        elif setChoose == 'Test':
+            self.forwardPropagation(self.data.DataTestX)
+
+        elif setChoose == 'Validation':
+            self.forwardPropagation(self.data.DataValX)
 
 if __name__ == '__main__':
     # irisDATA = myLoadData.loadIris(0.3, -1)
