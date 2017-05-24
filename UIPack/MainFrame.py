@@ -466,11 +466,11 @@ class MyMainWindow(QMainWindow):
 
                 succeed = self.mcbcnn.setModel(fname)
                 if succeed:
-                    reply = QMessageBox.information(self, '设置结果', '模型设置成功',
-                                                    QMessageBox.Yes, QMessageBox.Yes)
-
                     modelName = fname.split('/')[-1].split('.')[0]
                     self.presentModelName.setText(modelName)
+
+                    reply = QMessageBox.information(self, '设置结果', '模型设置成功',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
 
                 else:
                     reply = QMessageBox.information(self, '设置结果', '模型设置失败',
@@ -488,11 +488,11 @@ class MyMainWindow(QMainWindow):
 
                 succeed = self.trann.setModel(fname)
                 if succeed:
-                    reply = QMessageBox.information(self, '设置结果', '模型设置成功',
-                                                    QMessageBox.Yes, QMessageBox.Yes)
-
                     modelName = fname.split('/')[-1].split('.')[0]
                     self.presentModelNameT.setText(modelName)
+
+                    reply = QMessageBox.information(self, '设置结果', '模型设置成功',
+                                                    QMessageBox.Yes, QMessageBox.Yes)
 
                 else:
                     reply = QMessageBox.information(self, '设置结果', '模型设置失败',

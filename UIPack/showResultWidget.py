@@ -145,11 +145,12 @@ class ShowResultWidget(QWidget):
                 for i in range(self.parentW.mcbcnn.data.DataTrainX.shape[0]):
                     content = []
                     content.append('%5s' % str(i + 1))
-                    content.append('%-15s' % str(self.parentW.mcbcnn.data.DataTrainY[i, :]))
+                    content.append(self.formatStr(self.labelVecLength, str(self.parentW.mcbcnn.data.DataTrainY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
                     content.append('%-25s' % str(self.parentW.mcbcnn.getPredictResult()[i, :]))
                     # print(content)
+                    # print(len(str(self.parentW.mcbcnn.getPredictResult()[i, :])))
 
                     itemPattern = showResultItem(content)
                     item = QListWidgetItem(self.trainResultShowListWidget)
@@ -280,7 +281,7 @@ class ShowResultWidget(QWidget):
                 for i in range(self.parentW.mcbcnn.data.DataValX.shape[0]):
                     content = []
                     content.append('%5s' % str(i + 1))
-                    content.append('%-15s' % str(self.parentW.mcbcnn.data.DataValY[i, :]))
+                    content.append(self.formatStr(self.labelVecLength, str(self.parentW.mcbcnn.data.DataValY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
                     content.append('%-25s' % str(self.parentW.mcbcnn.getPredictResult()[i, :]))
@@ -413,7 +414,7 @@ class ShowResultWidget(QWidget):
                 for i in range(self.parentW.mcbcnn.data.DataTestX.shape[0]):
                     content = []
                     content.append('%5s' % str(i + 1))
-                    content.append('%-15s' % str(self.parentW.mcbcnn.data.DataTestY[i, :]))
+                    content.append(self.formatStr(self.labelVecLength, str(self.parentW.mcbcnn.data.DataTestY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
                     content.append('%-25s' % str(self.parentW.mcbcnn.getPredictResult()[i, :]))
@@ -470,7 +471,7 @@ class ShowResultWidget(QWidget):
             else:
     ######################train set result######
                 try:
-                    self.parentW.trann.runCNN(setChoose='Train', data=self.parentW.dataFor[self.senderName])
+                    self.parentW.trann.runTraNN(setChoose='Train', data=self.parentW.dataFor[self.senderName])
 
                 except myException.DataExistException:
                     labelbox = QHBoxLayout()
@@ -563,7 +564,7 @@ class ShowResultWidget(QWidget):
                 for i in range(self.parentW.trann.data.DataTrainX.shape[0]):
                     content = []
                     content.append('%5s' % str(i + 1))
-                    content.append('%-15s' % str(self.parentW.trann.data.DataTrainY[i, :]))
+                    content.append(self.formatStr(self.labelVecLength, str(self.parentW.trann.data.DataTrainY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
                     content.append('%-25s' % str(self.parentW.trann.getPredictResult()[i, :]))
@@ -602,7 +603,7 @@ class ShowResultWidget(QWidget):
 
                 ###################validation set result #######
                 try:
-                    self.parentW.trann.runCNN(setChoose='Validation', data=self.parentW.dataFor[self.senderName])
+                    self.parentW.trann.runTraNN(setChoose='Validation', data=self.parentW.dataFor[self.senderName])
 
                 except myException.DataExistException:
                     labelbox = QHBoxLayout()
@@ -696,7 +697,7 @@ class ShowResultWidget(QWidget):
                 for i in range(self.parentW.trann.data.DataValX.shape[0]):
                     content = []
                     content.append('%5s' % str(i + 1))
-                    content.append('%-15s' % str(self.parentW.trann.data.DataValY[i, :]))
+                    content.append(self.formatStr(self.labelVecLength, str(self.parentW.trann.data.DataValY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
                     content.append('%-25s' % str(self.parentW.trann.getPredictResult()[i, :]))
@@ -735,7 +736,7 @@ class ShowResultWidget(QWidget):
 
                 ##########################test set result #######
                 try:
-                    self.parentW.trann.runCNN(setChoose='Test', data=self.parentW.dataFor[self.senderName])
+                    self.parentW.trann.runTraNN(setChoose='Test', data=self.parentW.dataFor[self.senderName])
 
                 except myException.DataExistException:
                     labelbox = QHBoxLayout()
@@ -828,7 +829,7 @@ class ShowResultWidget(QWidget):
                 for i in range(self.parentW.trann.data.DataTestX.shape[0]):
                     content = []
                     content.append('%5s' % str(i + 1))
-                    content.append('%-15s' % str(self.parentW.trann.data.DataTestY[i, :]))
+                    content.append(self.formatStr(self.labelVecLength, str(self.parentW.trann.data.DataTestY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
                     content.append('%-25s' % str(self.parentW.trann.getPredictResult()[i, :]))
@@ -871,6 +872,15 @@ class ShowResultWidget(QWidget):
             self.show()
 
 
+    def formatStr(self, labelLength, pstr):
+        labelVector = 'Label Vector'
+        if labelLength >= len(labelVector):
+            fstr = '%%-%ds' % labelLength
+        else:
+            fstr = '%%-%ds' % len(labelVector)
+        rstr = fstr % pstr
+        return rstr
+
     def makeListFirstLine(self, labelVecLength):
         firstLine = list()
         firstLine.append('%-5s' % 'No.')
@@ -887,7 +897,7 @@ class ShowResultWidget(QWidget):
         firstLine.append('%-25s' % pattern)
         firstLine.append('%-25s' % ('Predict ' + pattern))
 
-        firstLine.append('%-15s' % 'Predict Label Vector')
+        firstLine.append('%-25s' % 'Predict Label Vector')
 
         # print(firstLine)
         return firstLine

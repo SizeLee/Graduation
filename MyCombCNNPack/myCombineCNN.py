@@ -354,7 +354,7 @@ class myCombineCNN:
         return self.__trainingProgress
 
     def getPredictResult(self):
-        return self.predictResult.copy()
+        return self.predictResult.round(decimals=3)
 
 
     def runCNN(self, setChoose = 'Train', data = None):

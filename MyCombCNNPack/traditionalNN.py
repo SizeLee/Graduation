@@ -19,7 +19,7 @@ class traditionalNN:
         return self.__trainingProgress
 
     def getPredictResult(self):
-        return self.predictResult.copy()
+        return self.predictResult.round(decimals=3)
 
     def train(self, trainRound, trainRate, LoutinRate, trainContinueFlag, trainPicAccessLock):
 
@@ -81,7 +81,7 @@ class traditionalNN:
 
         if data is not None:
             if isinstance(data, myLoadData.loadData):
-                if data.DataX.shape[1] != len(self.inputLayer.getWeight()):
+                if data.DataX.shape[1] != len(self.inputLayer.getWeight()) - 1:
                     raise myException.DataModelMatchException
 
                 self.data = data

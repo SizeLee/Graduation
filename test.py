@@ -356,4 +356,9 @@ y = w.tolist()
 y[0][0]=1
 print(type(y),y,w)
 z = np.array(y)
+print(z.round(decimals= 1))
 print(z)
+
+fstr = '%%%ds' % 4
+mstr = fstr % 'ss'
+print(mstr)
