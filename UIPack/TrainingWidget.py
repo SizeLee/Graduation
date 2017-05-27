@@ -3,7 +3,7 @@
 from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QVBoxLayout,
     QPushButton, QLabel, QLineEdit, QMessageBox, QProgressBar)
 from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.QtCore import pyqtSignal
+from PyQt5 import QtCore
 from MyCombCNNPack import myCombineCNN, traditionalNN
 import re, threading, time
 
@@ -113,9 +113,18 @@ class trainningWidget(QWidget):
         self.setGeometry(500, 200, self.wlength, self.whigh)
         self.show()
 
+
     def initConnect(self):
         self.button.clicked.connect(self.training)
         # self.progressBar.valueChanged.connect(self.progressChange)
+
+
+    def keyPressEvent(self, QKeyEvent):
+        # print(QKeyEvent.key())
+        # print(QtCore.Qt.Key_Enter)
+        if QKeyEvent.key() == QtCore.Qt.Key_Enter or QKeyEvent.key() == QtCore.Qt.Key_Enter - 1:
+            self.training()
+
 
     def progressChange(self):
         while self.listenProgressPermission[0]:
@@ -137,7 +146,7 @@ class trainningWidget(QWidget):
 
 
     def training(self):
-        if self.sender().text() == 'Start':
+        if self.button.text() == 'Start':
             errorMessage = ''
             if not self.isInteger(self.setTraingingTimes.text()):
                 errorMessage = errorMessage + '训练次数无效输入\n'
@@ -163,7 +172,7 @@ class trainningWidget(QWidget):
 
             self.threadRunPermission[0] = True
             self.listenProgressPermission[0] = True
-            self.sender().setText('Stop')
+            self.button.setText('Stop')
             if self.senderName == 'New':
                 self.parentW.mcbcnn = myCombineCNN.myCombineCNN(self.parentW.dataFor[self.senderName],
                                                                 self.parentW.combineNumConv,
@@ -195,10 +204,10 @@ class trainningWidget(QWidget):
                 listenProgressThread.setDaemon(True)
                 listenProgressThread.start()
 
-        elif self.sender().text() == 'Stop':
+        elif self.button.text() == 'Stop':
             self.threadRunPermission[0] = False
             self.listenProgressPermission[0] = False
-            self.sender().setText('Start')
+            self.button.setText('Start')
             scalePic = QPixmap('start.jpg')
             scalePic = scalePic.scaled(self.trainingCostPicture.size())
             # self.trainingCostPicture.setPixmap(scalePic)
@@ -206,7 +215,7 @@ class trainningWidget(QWidget):
             scalePic.save('TrainingCost.png')
             self.trainingPicAccessLock.release()
 
-        elif self.sender().text() == 'Finished':
+        elif self.button.text() == 'Finished':
             self.progressBar.setText('%d%%' % 0)
             self.button.setText('Start')
             scalePic = QPixmap('start.jpg')

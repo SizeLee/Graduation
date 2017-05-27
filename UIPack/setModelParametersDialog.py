@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QVBoxLayout,
     QPushButton, QLabel, QLineEdit, QMessageBox)
 from PyQt5.QtGui import QFont
+from PyQt5 import QtCore
 import re
 import myLoadData
 
@@ -104,6 +105,14 @@ class setLossParameterDialog(QWidget):
     def initConnect(self):
         self.cancelButton.clicked.connect(self.close)
         self.confirmButton.clicked.connect(self.confirmParameters)
+
+
+    def keyPressEvent(self, QKeyEvent):
+        # print(QKeyEvent.key())
+        # print(QtCore.Qt.Key_Enter)
+        if QKeyEvent.key() == QtCore.Qt.Key_Enter or QKeyEvent.key() == QtCore.Qt.Key_Enter - 1:
+            self.confirmParameters()
+
 
     def confirmParameters(self):
         if self.senderName == 'New':
