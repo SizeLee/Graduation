@@ -4,8 +4,9 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QFr
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor
 import myLoadData
-from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog, TrainingWidget, showResultWidget
-from MyCombCNNPack import combineNumCalculate, myCombineCNN, traditionalNN
+from UIPack import setLossParameterDialog, showDataWidget, setModelParametersDialog, TrainingWidget, showResultWidget,\
+    showJudgeWidgets, chooseJudgeDataSetWidget
+from MyCombCNNPack import combineNumCalculate, myCombineCNN, traditionalNN, Judgement
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -284,6 +285,8 @@ class MyMainWindow(QMainWindow):
 
         self.showResultButton.clicked.connect(self.showResult)
         self.showResultButtonT.clicked.connect(self.showResult)
+        self.judgeResultButton.clicked.connect(self.showJudge)
+        self.judgeResultButtonT.clicked.connect(self.showJudge)
 
 
 ############ data load module #####################
@@ -512,6 +515,19 @@ class MyMainWindow(QMainWindow):
             self.showResultW = showResultWidget.ShowResultWidget('traditional NN预测结果展示', self, 'Tra')
 
         return
+
+    def showJudge(self):
+        if self.sender() is self.judgeResultButton:
+            self.chooseJDWin = chooseJudgeDataSetWidget.chooseJudgeDataSetWidget('Choose Judgement-based-on Data Set',
+                                                                                 self, 'New')
+
+        elif self.sender() is self.judgeResultButtonT:
+            self.chooseJDWin = chooseJudgeDataSetWidget.chooseJudgeDataSetWidget('Choose Judgement-based-on Data Set',
+                                                                                 self, 'Tra')
+        # self.testw = showJudgeWidgets.judgeWidget('test', self, 'New', 'Train')
+        # self.mcbcnn.runCNN('Test', self.dataFor['New'])
+        # drawCM = Judgement.myJudge(self.mcbcnn.data.yClassDic, self.mcbcnn.getAccuratePredictResult().argmax(1), self.mcbcnn.data.DataTestY.argmax(1))
+        # drawCM.plotConfuseMatrix()
 
 
 

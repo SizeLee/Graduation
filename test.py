@@ -352,13 +352,33 @@ import matplotlib.pyplot as plt
 # plt.show()
 
 w = 0.24 * np.random.rand(10, 1) - 0.12
-y = w.tolist()
-y[0][0]=1
-print(type(y),y,w)
-z = np.array(y)
-print(z.round(decimals= 1))
-print(z)
+# y = w.tolist()
+# y[0][0]=1
+# print(type(y),y,w)
+# z = np.array(y)
+# print(z.round(decimals= 1))
+# print(z)
+#
+# fstr = '%%%ds' % 4
+# mstr = fstr % 'ss'
+# print(mstr)
 
-fstr = '%%%ds' % 4
-mstr = fstr % 'ss'
-print(mstr)
+# y = list(w)
+# print(y)
+# print(type(w))
+# print(isinstance(w, np.ndarray))
+#
+# w = np.array([1,2,3])
+# w = w.T
+# print(w)
+#
+# t = (1,2)
+# y = list(t)
+# print(y)
+# d = {1:1,2:2}
+# print(len(d))
+
+w = np.array([[1,2,3],
+             [2,3,4]])
+print(w.sum(1).sum())
+

@@ -16,7 +16,7 @@ class showResultItem(QWidget):
         layout = QHBoxLayout()
         for i in range(self.length):
             label = QLabel(self.contentList[i])
-            label.setFont(QFont('微软雅黑', 12))
+            label.setFont(QFont('Consolas', 12))
             self.labelList.append(label)
             layout.addWidget(label)
             layout.addStretch(1)
@@ -144,7 +144,7 @@ class ShowResultWidget(QWidget):
 
                 for i in range(self.parentW.mcbcnn.data.DataTrainX.shape[0]):
                     content = []
-                    content.append('%5s' % str(i + 1))
+                    content.append('%-5s' % str(i + 1))
                     content.append(self.formatStr(self.labelVecLength, str(self.parentW.mcbcnn.data.DataTrainY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
@@ -280,7 +280,7 @@ class ShowResultWidget(QWidget):
 
                 for i in range(self.parentW.mcbcnn.data.DataValX.shape[0]):
                     content = []
-                    content.append('%5s' % str(i + 1))
+                    content.append('%-5s' % str(i + 1))
                     content.append(self.formatStr(self.labelVecLength, str(self.parentW.mcbcnn.data.DataValY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
@@ -413,7 +413,7 @@ class ShowResultWidget(QWidget):
 
                 for i in range(self.parentW.mcbcnn.data.DataTestX.shape[0]):
                     content = []
-                    content.append('%5s' % str(i + 1))
+                    content.append('%-5s' % str(i + 1))
                     content.append(self.formatStr(self.labelVecLength, str(self.parentW.mcbcnn.data.DataTestY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
@@ -563,7 +563,7 @@ class ShowResultWidget(QWidget):
 
                 for i in range(self.parentW.trann.data.DataTrainX.shape[0]):
                     content = []
-                    content.append('%5s' % str(i + 1))
+                    content.append('%-5s' % str(i + 1))
                     content.append(self.formatStr(self.labelVecLength, str(self.parentW.trann.data.DataTrainY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
@@ -696,7 +696,7 @@ class ShowResultWidget(QWidget):
 
                 for i in range(self.parentW.trann.data.DataValX.shape[0]):
                     content = []
-                    content.append('%5s' % str(i + 1))
+                    content.append('%-5s' % str(i + 1))
                     content.append(self.formatStr(self.labelVecLength, str(self.parentW.trann.data.DataValY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])
@@ -828,7 +828,7 @@ class ShowResultWidget(QWidget):
 
                 for i in range(self.parentW.trann.data.DataTestX.shape[0]):
                     content = []
-                    content.append('%5s' % str(i + 1))
+                    content.append('%-5s' % str(i + 1))
                     content.append(self.formatStr(self.labelVecLength, str(self.parentW.trann.data.DataTestY[i, :])))
                     content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                     content.append('%-25s' % self.labelDic[self.prelabelIndex[i]])

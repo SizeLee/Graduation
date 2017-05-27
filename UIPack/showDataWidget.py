@@ -14,7 +14,7 @@ class showDataItem(QWidget):
         layout = QHBoxLayout()
         for i in range(self.length):
             label = QLabel(self.contentList[i])
-            label.setFont(QFont('微软雅黑', 12))
+            label.setFont(QFont('Consolas', 12))
             self.labelList.append(label)
             layout.addWidget(label)
             layout.addStretch(1)
@@ -68,15 +68,17 @@ class ShowDataWidget(QWidget):
 
             self.labelDic = {v:k for k,v in self.parentW.dataFor[self.senderName].yClassDic.items()}
             self.labelIndex = self.parentW.dataFor[self.senderName].DataTrainY.argmax(1)
+
             for i in range(self.parentW.dataFor[self.senderName].DataTrainX.shape[0]):
                 content = []
-                content.append('%5s' % str(i + 1))
+                content.append('%-5s' % str(i + 1))
                 for j in range(self.featureNum):
                     content.append('%-8.2f' % self.parentW.dataFor[self.senderName].DataTrainX[i, j])
 
                 content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                 content.append('%-15s' % str(self.parentW.dataFor[self.senderName].DataTrainY[i, :]))
                 # print(content)
+
                 itemPattern = showDataItem(content)
                 item = QListWidgetItem(self.trainDataShowListWidget)
                 item.setSizeHint(itemPattern.sizeHint())
@@ -118,15 +120,17 @@ class ShowDataWidget(QWidget):
 
             self.labelDic = {v: k for k, v in self.parentW.dataFor[self.senderName].yClassDic.items()}
             self.labelIndex = self.parentW.dataFor[self.senderName].DataValY.argmax(1)
+
             for i in range(self.parentW.dataFor[self.senderName].DataValX.shape[0]):
                 content = []
-                content.append('%5s' % str(i + 1))
+                content.append('%-5s' % str(i + 1))
                 for j in range(self.featureNum):
                     content.append('%-8.2f' % self.parentW.dataFor[self.senderName].DataValX[i, j])
 
                 content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                 content.append('%-15s' % str(self.parentW.dataFor[self.senderName].DataValY[i, :]))
                 # print(content)
+
                 itemPattern = showDataItem(content)
                 item = QListWidgetItem(self.valDataShowListWidget)
                 item.setSizeHint(itemPattern.sizeHint())
@@ -168,15 +172,17 @@ class ShowDataWidget(QWidget):
 
             self.labelDic = {v: k for k, v in self.parentW.dataFor[self.senderName].yClassDic.items()}
             self.labelIndex = self.parentW.dataFor[self.senderName].DataTestY.argmax(1)
+
             for i in range(self.parentW.dataFor[self.senderName].DataTestX.shape[0]):
                 content = []
-                content.append('%5s' % str(i + 1))
+                content.append('%-5s' % str(i + 1))
                 for j in range(self.featureNum):
                     content.append('%-8.2f' % self.parentW.dataFor[self.senderName].DataTestX[i, j])
 
                 content.append('%-25s' % self.labelDic[self.labelIndex[i]])
                 content.append('%-15s' % str(self.parentW.dataFor[self.senderName].DataTestY[i, :]))
                 # print(content)
+
                 itemPattern = showDataItem(content)
                 item = QListWidgetItem(self.testDataShowListWidget)
                 item.setSizeHint(itemPattern.sizeHint())

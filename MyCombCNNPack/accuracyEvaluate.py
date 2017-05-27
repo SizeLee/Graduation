@@ -11,3 +11,14 @@ def classifyAccuracyRate(ypredict, ylabel):
             right += 1;
 
     return right/sampleNum
+
+def AccuracyRate(ypredictArgmaxList, ylabelArgmaxList):
+    sampleNum = len(ylabelArgmaxList)
+    right = 0
+    for i in range(sampleNum):
+        if ypredictArgmaxList[i] == ylabelArgmaxList[i]:
+            right += 1
+
+    accuracy = right/sampleNum
+
+    return accuracy

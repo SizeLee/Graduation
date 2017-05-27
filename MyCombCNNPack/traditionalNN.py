@@ -21,6 +21,9 @@ class traditionalNN:
     def getPredictResult(self):
         return self.predictResult.round(decimals=3)
 
+    def getAccuratePredictResult(self):
+        return self.predictResult.copy()
+
     def train(self, trainRound, trainRate, LoutinRate, trainContinueFlag, trainPicAccessLock):
 
         self.inputLayer = fullConnect.fullConnectInputLayer(self.data.DataTrainX.shape, trainRate, LoutinRate)
@@ -48,7 +51,7 @@ class traditionalNN:
             # self.forwardPropagation(self.combConvLayer1.makeCombineData(self.data.DataValX))
             # valCost = costFunc.costCal(self.predictResult, self.data.DataValY)
             # print(trainCost, valCost)
-            print(trainCost)
+            # print(trainCost)
             trainCostList.append(trainCost)
             trainTimeList.append(trainTime + 1)
             self.__trainingProgress = (trainTime + 1) / float(trainRound)

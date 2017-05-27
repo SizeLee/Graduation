@@ -241,7 +241,7 @@ class myCombineCNN:
             # self.forwardPropagation(self.combConvLayer1.makeCombineData(self.data.DataValX))
             # valCost = costFunc.costCal(self.predictResult, self.data.DataValY)
             # print(trainCost, valCost)
-            print(trainCost)
+            # print(trainCost)
             trainCostList.append(trainCost)
             trainTimeList.append(trainTime + 1)
             self.__trainingProgress = (trainTime + 1) / float(trainRound)
@@ -355,6 +355,9 @@ class myCombineCNN:
 
     def getPredictResult(self):
         return self.predictResult.round(decimals=3)
+
+    def getAccuratePredictResult(self):
+        return self.predictResult.copy()
 
 
     def runCNN(self, setChoose = 'Train', data = None):

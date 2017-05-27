@@ -158,38 +158,49 @@
 #     ex = Example()
 #     sys.exit(app.exec_())
 
-# import sys
-# from PyQt5.QtCore import Qt
-# from PyQt5.QtWidgets import (QWidget, QLCDNumber, QSlider,
-#                              QVBoxLayout, QApplication)
-#
-#
-# class Example(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#
-#         self.initUI()
-#
-#     def initUI(self):
-#         lcd = QLCDNumber(self)
-#         sld = QSlider(Qt.Horizontal, self)
-#
-#         vbox = QVBoxLayout()
-#         vbox.addWidget(lcd)
-#         vbox.addWidget(sld)
-#
-#         self.setLayout(vbox)
-#         sld.valueChanged.connect(lcd.display)
-#
-#         self.setGeometry(300, 300, 250, 150)
-#         self.setWindowTitle('Signal & slot')
-#         self.show()
-#
-#
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ex = Example()
-#     sys.exit(app.exec_())
+import sys
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (QWidget, QLCDNumber, QSlider,
+                             QVBoxLayout, QApplication,QPushButton, QLabel)
+
+
+class Example(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        lcd = QLCDNumber(self)
+        sld = QSlider(Qt.Horizontal, self)
+        btn = QPushButton('sdfa')
+
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(lcd)
+        self.vbox.addWidget(sld)
+        self.vbox.addWidget(btn)
+
+        self.setLayout(self.vbox)
+        sld.valueChanged.connect(lcd.display)
+        btn.clicked.connect(self.btnevent)
+
+        self.setGeometry(300, 300, 250, 150)
+        self.setWindowTitle('Signal & slot')
+        self.show()
+
+
+    def btnevent(self):
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(QLabel('dfsd'))
+
+        self.hide()
+        self.show()
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
 
 # import sys
 # from PyQt5.QtCore import pyqtSignal, QObject
@@ -347,65 +358,65 @@
 #     ex = Example()
 #     sys.exit(app.exec_())
 
-
-import sys
-from PyQt5.QtWidgets import (QMainWindow, QTextEdit,
-                             QAction, QFileDialog, QApplication)
-from PyQt5.QtGui import QIcon
-
-
-class Example(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.initUI()
-
-    def initUI(self):
-        self.textEdit = QTextEdit()
-        self.setCentralWidget(self.textEdit)
-        self.statusBar()
-
-        openFile = QAction(QIcon('open.png'), 'Open', self)
-        openFile.setShortcut('Ctrl+O')
-        openFile.setStatusTip('Open new File')
-        openFile.triggered.connect(self.showDialog)
-
-        saveFile = QAction('Save', self)
-        saveFile.triggered.connect(self.saveFile)
-
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(openFile)
-        fileMenu.addAction(saveFile)
-
-        self.setGeometry(300, 300, 350, 300)
-        self.setWindowTitle('File dialog')
-        self.show()
-
-    def showDialog(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file')
-
-        if fname[0]:
-            # print(fname[0])
-            f = open(fname[0], 'r')
-
-            with f:
-                data = f.read()
-                self.textEdit.setText(data)
-
-    def saveFile(self):
-        fname, ok = QFileDialog.getSaveFileName(self, 'Save file', '.\\model.json', 'Json files (*.json)')
-        if ok:
-            with open(fname, 'w+') as f:
-                f.write('234')
-
-
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec_())
+#
+# import sys
+# from PyQt5.QtWidgets import (QMainWindow, QTextEdit,
+#                              QAction, QFileDialog, QApplication)
+# from PyQt5.QtGui import QIcon
+#
+#
+# class Example(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#
+#         self.initUI()
+#
+#     def initUI(self):
+#         self.textEdit = QTextEdit()
+#         self.setCentralWidget(self.textEdit)
+#         self.statusBar()
+#
+#         openFile = QAction(QIcon('open.png'), 'Open', self)
+#         openFile.setShortcut('Ctrl+O')
+#         openFile.setStatusTip('Open new File')
+#         openFile.triggered.connect(self.showDialog)
+#
+#         saveFile = QAction('Save', self)
+#         saveFile.triggered.connect(self.saveFile)
+#
+#         menubar = self.menuBar()
+#         fileMenu = menubar.addMenu('&File')
+#         fileMenu.addAction(openFile)
+#         fileMenu.addAction(saveFile)
+#
+#         self.setGeometry(300, 300, 350, 300)
+#         self.setWindowTitle('File dialog')
+#         self.show()
+#
+#     def showDialog(self):
+#         fname = QFileDialog.getOpenFileName(self, 'Open file')
+#
+#         if fname[0]:
+#             # print(fname[0])
+#             f = open(fname[0], 'r')
+#
+#             with f:
+#                 data = f.read()
+#                 self.textEdit.setText(data)
+#
+#     def saveFile(self):
+#         fname, ok = QFileDialog.getSaveFileName(self, 'Save file', '.\\model.json', 'Json files (*.json)')
+#         if ok:
+#             with open(fname, 'w+') as f:
+#                 f.write('234')
+#
+#
+#
+#
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ex = Example()
+#     sys.exit(app.exec_())
 
 # import sys
 # from PyQt5.QtWidgets import QWidget, QCheckBox, QApplication
