@@ -61,11 +61,11 @@ class chooseJudgeDataSetWidget(QWidget):
                                                              self.senderName, 'Train')
 
         elif self.sender() is self.btnVal:
-            self.showJudgeWin = showJudgeWidgets.judgeWidget('Judgement based on Training Data Set', self.parentW,
+            self.showJudgeWin = showJudgeWidgets.judgeWidget('Judgement based on Validation Data Set', self.parentW,
                                                              self.senderName, 'Validation')
 
         elif self.sender() is self.btnTest:
-            self.showJudgeWin = showJudgeWidgets.judgeWidget('Judgement based on Training Data Set', self.parentW,
+            self.showJudgeWin = showJudgeWidgets.judgeWidget('Judgement based on Test Data Set', self.parentW,
                                                              self.senderName, 'Test')
 
         return
