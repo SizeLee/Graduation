@@ -96,7 +96,12 @@ class myJudge:
         sumPredictMatrix = self.myconfusionmatrix.sum(axis= 0)
 
         for i in range(self.classNum):
-            precisionRate = self.myconfusionmatrix[i, i]/float(sumPredictMatrix[i])
+            if sumPredictMatrix[i] == 0:
+                precisionRate = 0.
+
+            else:
+                precisionRate = self.myconfusionmatrix[i, i]/float(sumPredictMatrix[i])
+
             precisionDic[self.labelDic[i]] = precisionRate
 
         return precisionDic
