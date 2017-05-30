@@ -29,6 +29,9 @@ class convLayerCore:
     def setWeight(self, wList):
         self.__w = np.array(wList)
 
+    def setTrainRate(self, rate):
+        self.__trainRate = rate
+
     def calculate(self, newInputDataX = None):
         if newInputDataX is not None:
             if self.__inputDataX is not None and self.__inputDataX.shape[1] != newInputDataX.shape[1]:

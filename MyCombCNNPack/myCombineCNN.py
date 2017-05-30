@@ -225,6 +225,7 @@ class myCombineCNN:
         self.trainInitializeFlag = True
 
         trainCost = costFunc.costCal(self.predictResult, self.data.DataTrainY)
+        lastTrainCost = trainCost
         trainCostList = []
         trainCostList.append(trainCost)
         trainTimeList = [0]
@@ -242,6 +243,18 @@ class myCombineCNN:
             # valCost = costFunc.costCal(self.predictResult, self.data.DataValY)
             # print(trainCost, valCost)
             # print(trainCost)
+
+            # if trainCost > lastTrainCost:
+            #     trainRate = trainRate / 2
+            #     for i in range(len(self.convCoreList1)):
+            #         self.convCoreList1[i].setTrainRate(trainRate)
+            #
+            #     self.fullInputLayer.setTrainRate(trainRate)
+            #     self.fullMidLayer.setTrainRate(trainRate)
+            #     print(trainRate)
+            #
+            # lastTrainCost = trainCost
+
             trainCostList.append(trainCost)
             trainTimeList.append(trainTime + 1)
             self.__trainingProgress = (trainTime + 1) / float(trainRound)

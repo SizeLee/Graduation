@@ -72,6 +72,7 @@ class myJudge:
                 plt.text(pre, real, "%0.2d" % (num,), color='blue', fontsize=16, va='center', ha='center')
 
         plt.savefig('confusionMatrix.png')
+        plt.close()
 
 
     def getRecall(self):
