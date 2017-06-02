@@ -319,7 +319,12 @@ class MyMainWindow(QMainWindow):
                 # print(self.dataFor['New'].DataTrainX, '\n', self.dataFor['New'].DataTrainY)
 
             except FileNotFoundError as e:
-                reply = QMessageBox.question(self, 'Message', "Data file not exist",
+                reply = QMessageBox.information(self, 'Message', "Data file not exist",
+                                             QMessageBox.Yes, QMessageBox.Yes)
+                return
+
+            except Exception:
+                reply = QMessageBox.information(self, 'Message', "Data file format error",
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
 
@@ -329,7 +334,12 @@ class MyMainWindow(QMainWindow):
                 # print(self.dataFor['Tra'].DataTrainX, '\n', self.dataFor['Tra'].DataTrainY)
 
             except FileNotFoundError as e:
-                reply = QMessageBox.question(self, 'Message', "Data file not exist",
+                reply = QMessageBox.information(self, 'Message', "Data file not exist",
+                                             QMessageBox.Yes, QMessageBox.Yes)
+                return
+
+            except Exception:
+                reply = QMessageBox.information(self, 'Message', "Data file format error",
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
 
@@ -358,11 +368,11 @@ class MyMainWindow(QMainWindow):
 
     def preProcess(self):
         if self.dataFor['Tra'] is None:
-            reply = QMessageBox.question(self, '数据错误', '没有加载数据，无法预处理',
+            reply = QMessageBox.information(self, '数据错误', '没有加载数据，无法预处理',
                                          QMessageBox.Yes, QMessageBox.Yes)
         else:
             self.dataFor['Tra'].MeanPreProcess()
-            reply = QMessageBox.question(self, 'Message', 'PreProcess succeed!',
+            reply = QMessageBox.information(self, 'Message', 'PreProcess succeed!',
                                          QMessageBox.Yes, QMessageBox.Yes)
 
         return

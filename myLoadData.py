@@ -265,26 +265,39 @@ class loadData:
                 featureMeanFor[yClass][feature] /= validNumFor[yClass][feature]
 
         # print(featureMeanFor)
+        featureMean = dict()
+        for feature in range(self.DataTrainX.shape[1]):
+            summary = 0.
+            num = 0
+            for yClass in range(self.yClassNum):
+                summary += featureMeanFor[yClass][feature] * validNumFor[yClass][feature]
+                num += validNumFor[yClass][feature]
+
+            featureMean[feature] = summary / num
+
 
         ########### preprocess training data set
         for sample in range(self.DataTrainX.shape[0]):
             for feature in range(self.DataTrainX.shape[1]):
                 if self.DataTrainX[sample, feature] == self.setLossValue:
-                    self.DataTrainX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+                    # self.DataTrainX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+                    self.DataTrainX[sample, feature] = featureMean[feature]
 
         ###########preprocess validation data set
         ylabel = self.DataValY.argmax(1)
         for sample in range(self.DataValX.shape[0]):
             for feature in range(self.DataValX.shape[1]):
                 if self.DataValX[sample, feature] == self.setLossValue:
-                    self.DataValX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+                    # self.DataValX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+                    self.DataValX[sample, feature] = featureMean[feature]
 
         #########preprocess test data set
         ylabel = self.DataTestY.argmax(1)
         for sample in range(self.DataTestX.shape[0]):
             for feature in range(self.DataTestX.shape[1]):
                 if self.DataTestX[sample, feature] == self.setLossValue:
-                    self.DataTestX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+                    # self.DataTestX[sample, feature] = featureMeanFor[ylabel[sample]][feature]
+                    self.DataTestX[sample, feature] = featureMean[feature]
 
 
 

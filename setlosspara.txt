@@ -1,0 +1,7 @@
+7.2kmcbcnn
+loss rate£º0.3
+set value£º0
+
+1w6
+lossrate£º0.3
+set value£º10
