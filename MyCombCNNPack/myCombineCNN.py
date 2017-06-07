@@ -33,7 +33,7 @@ class myCombineCNN:
 
         self.trainInitializeFlag = False
 
-        self.__trainingProgress = 0
+        self.__trainingProgress = 0.
 
     def __modelExist(self):
         if self.combConvLayer1 is None or \
@@ -140,7 +140,7 @@ class myCombineCNN:
 
 
     def trainCNN(self, trainRound, trainRate, trainingContinueFlag, trainPicAccessLock):
-
+        self.__trainingProgress = 0.
         self.combConvLayer1 = combineFeature.combineFeature(self.data.DataX.shape[1], self.combineNumConv1)
         combKindNumConv1 = combineNumCalculate.combineNumCal(self.data.DataX.shape[1], self.combineNumConv1)
         inputDataX = self.combConvLayer1.makeCombineData(self.data.DataTrainX)
