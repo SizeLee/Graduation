@@ -257,7 +257,7 @@ class myCombineCNN:
 
             trainCostList.append(trainCost)
             trainTimeList.append(trainTime + 1)
-            self.__trainingProgress = (trainTime + 1) / float(trainRound)
+            self.__trainingProgress = (trainTime + 2) / float(trainRound)
             #     progressBar.setValue(np.ceil((trainTime + 1) / float(trainRound) * 100))
             if (trainTime + 1) % 5 == 0:
                 plt.figure(figsize=(8,5))
