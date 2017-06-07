@@ -31,6 +31,10 @@ class MyMainWindow(QMainWindow):
         self.dataLossRate['Tra'] = 0.
         self.dataSetLossValue['Tra'] = 0.
 
+        self.traingWidgetOnFlag = dict()
+        self.traingWidgetOnFlag['New'] = False
+        self.traingWidgetOnFlag['Tra'] = False
+
         self.combineNumConv = 2
         self.convCoreNum = 5
         self.combineNumPooling = 4
@@ -420,10 +424,22 @@ class MyMainWindow(QMainWindow):
                 return
 
             # print(self.trainingW)
+            if self.trainingWT is not None:
+                reply = QMessageBox.information(self, '提示', 'traditional NN训练正在进行，请等待其结束',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+
             self.trainingW = TrainingWidget.trainningWidget('combine-CNN训练', self, senderName)
+            self.traingWidgetOnFlag[senderName] = False
 
         elif senderName == 'Tra':
+            if self.trainingW is not None:
+                reply = QMessageBox.information(self, '提示', 'combine-CNN训练正在进行，请等待其结束',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+
             self.trainingWT = TrainingWidget.trainningWidget('traditional NN训练', self, senderName)
+            self.traingWidgetOnFlag[senderName] = False
 
         return
 
@@ -519,19 +535,41 @@ class MyMainWindow(QMainWindow):
     def showResult(self):
 
         if self.sender() is self.showResultButton:
+            if self.traingWidgetOnFlag['New']:
+                reply = QMessageBox.information(self, '提示', '训练正在进行',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+
             self.showResultW = showResultWidget.ShowResultWidget('combine-CNN预测结果展示', self, 'New')
 
         elif self.sender() is self.showResultButtonT:
+            if self.traingWidgetOnFlag['Tra']:
+                reply = QMessageBox.information(self, '提示', '训练正在进行',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+
             self.showResultW = showResultWidget.ShowResultWidget('traditional NN预测结果展示', self, 'Tra')
 
         return
 
     def showJudge(self):
         if self.sender() is self.judgeResultButton:
+
+            if self.traingWidgetOnFlag['New']:
+                reply = QMessageBox.information(self, '提示', '训练正在进行',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+
             self.chooseJDWin = chooseJudgeDataSetWidget.chooseJudgeDataSetWidget('Choose Judgement-based-on Data Set',
                                                                                  self, 'New')
 
         elif self.sender() is self.judgeResultButtonT:
+
+            if self.traingWidgetOnFlag['Tra']:
+                reply = QMessageBox.information(self, '提示', '训练正在进行',
+                                                QMessageBox.Yes, QMessageBox.Yes)
+                return
+
             self.chooseJDWin = chooseJudgeDataSetWidget.chooseJudgeDataSetWidget('Choose Judgement-based-on Data Set',
                                                                                  self, 'Tra')
         # self.testw = showJudgeWidgets.judgeWidget('test', self, 'New', 'Train')

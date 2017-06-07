@@ -38,9 +38,11 @@ class trainningWidget(QWidget):
 
         if self.senderName == 'New':
             self.parentW.presentModelName.setText('Training Model')
+            self.parentW.traingWidgetOnFlag[self.senderName] = False
             self.parentW.trainingW = None
         elif self.senderName == 'Tra':
             self.parentW.presentModelNameT.setText('Training Model')
+            self.parentW.traingWidgetOnFlag[self.senderName] = False
             self.parentW.trainingWT = None
 
 
@@ -130,6 +132,7 @@ class trainningWidget(QWidget):
         while self.listenProgressPermission[0]:
             if self.senderName == 'New':
                 progress = int(self.parentW.mcbcnn.getTrainingProgress() * 100 + 0.5)
+                # print(self.parentW.mcbcnn.getTrainingProgress())
 
             elif self.senderName == 'Tra':
                 progress = int(self.parentW.trann.getTrainingProgress() * 100 + 0.5)
@@ -141,6 +144,7 @@ class trainningWidget(QWidget):
             self.trainingPicAccessLock.release()
             if progress >= 100:
                 self.button.setText('Finished')
+                self.parentW.traingWidgetOnFlag[self.senderName] = False
                 break
             time.sleep(1)
 
@@ -173,6 +177,7 @@ class trainningWidget(QWidget):
             self.threadRunPermission[0] = True
             self.listenProgressPermission[0] = True
             self.button.setText('Stop')
+            self.parentW.traingWidgetOnFlag[self.senderName] = True
             if self.senderName == 'New':
                 self.parentW.mcbcnn = myCombineCNN.myCombineCNN(self.parentW.dataFor[self.senderName],
                                                                 self.parentW.combineNumConv,
@@ -207,6 +212,7 @@ class trainningWidget(QWidget):
         elif self.button.text() == 'Stop':
             self.threadRunPermission[0] = False
             self.listenProgressPermission[0] = False
+            self.parentW.traingWidgetOnFlag[self.senderName] = False
             self.button.setText('Start')
             scalePic = QPixmap('start.jpg')
             scalePic = scalePic.scaled(self.trainingCostPicture.size())
