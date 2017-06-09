@@ -83,7 +83,12 @@ class myJudge:
         sumRealMatrix = self.myconfusionmatrix.sum(axis= 1)
 
         for i in range(self.classNum):
-            recallRate = self.myconfusionmatrix[i, i]/float(sumRealMatrix[i])
+            if sumRealMatrix[i] == 0:
+                recallRate = 0.
+                
+            else:
+                recallRate = self.myconfusionmatrix[i, i]/float(sumRealMatrix[i])
+
             recallDic[self.labelDic[i]] = recallRate
 
         return recallDic
@@ -117,7 +122,10 @@ class myJudge:
         recallD = self.getRecall()
 
         for eachKey in f1Dic:
-            f1Dic[eachKey] = 2 * precisionD[eachKey] * recallD[eachKey] / (precisionD[eachKey] + recallD[eachKey])
+            if precisionD[eachKey] + recallD[eachKey] == 0.:
+                f1Dic[eachKey] = 0.
+            else:
+                f1Dic[eachKey] = 2 * precisionD[eachKey] * recallD[eachKey] / (precisionD[eachKey] + recallD[eachKey])
 
         return f1Dic
 

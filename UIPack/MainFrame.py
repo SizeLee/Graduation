@@ -298,19 +298,19 @@ class MyMainWindow(QMainWindow):
         if self.sender() is self.dataFileChooseButton:
             self.fname['New'], ok = QFileDialog.getOpenFileName(self, 'Open file', '..', 'Text files (*.txt)')
             if ok:
-                dataname = self.fname['New'].split('/')[-1].split('.')[0]
-                # print(dataname)
-                self.presentDataName.setText(dataname)
-                self.presentDataName.resize(self.presentDataName.sizeHint())
+                # dataname = self.fname['New'].split('/')[-1].split('.')[0]
+                # # print(dataname)
+                # self.presentDataName.setText(dataname)
+                # self.presentDataName.resize(self.presentDataName.sizeHint())
                 self.loadData()
 
         elif self.sender() is self.dataFileChooseButtonT:
             self.fname['Tra'], ok = QFileDialog.getOpenFileName(self, 'Open file', '..', 'Text files (*.txt)')
             if ok:
-                dataname = self.fname['Tra'].split('/')[-1].split('.')[0]
-                # print(dataname)
-                self.presentDataNameT.setText(dataname)
-                self.presentDataNameT.resize(self.presentDataNameT.sizeHint())
+                # dataname = self.fname['Tra'].split('/')[-1].split('.')[0]
+                # # print(dataname)
+                # self.presentDataNameT.setText(dataname)
+                # self.presentDataNameT.resize(self.presentDataNameT.sizeHint())
                 self.loadData()
 
         return
@@ -332,6 +332,11 @@ class MyMainWindow(QMainWindow):
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
 
+            dataname = self.fname['New'].split('/')[-1].split('.')[0]
+            # print(dataname)
+            self.presentDataName.setText(dataname)
+            self.presentDataName.resize(self.presentDataName.sizeHint())
+
         elif self.sender() is self.dataFileChooseButtonT:
             try:
                 self.dataFor['Tra'] = myLoadData.loadData(self.fname['Tra'], self.dataLossRate['Tra'], self.dataSetLossValue['Tra'])
@@ -346,6 +351,11 @@ class MyMainWindow(QMainWindow):
                 reply = QMessageBox.information(self, 'Message', "Data file format error",
                                              QMessageBox.Yes, QMessageBox.Yes)
                 return
+
+            dataname = self.fname['Tra'].split('/')[-1].split('.')[0]
+            # print(dataname)
+            self.presentDataNameT.setText(dataname)
+            self.presentDataNameT.resize(self.presentDataNameT.sizeHint())
 
         return
 
