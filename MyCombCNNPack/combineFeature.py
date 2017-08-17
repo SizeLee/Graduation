@@ -108,14 +108,14 @@ if __name__ == '__main__':
     a = combineFeature(4,2)
     a.outputCombineMap()
 
-# a = combineFeature(4,2)
-# a.outputCombineMap()
-# irisData = myLoadData.loadIris()
-# b = a.makeCombineData(irisData.DataTrainX)
-# print(b)
-# print(b.shape)
-# a = combineFeature(6,4)
-# a.outputCombineMap()
+    a = combineFeature(4, 2)
+    a.outputCombineMap()
+    irisData = myLoadData.loadIris()
+    b = a.makeCombineData(irisData.DataTrainX)
+    print(b)
+    print(b.shape)
+    a = combineFeature(6, 4)
+    a.outputCombineMap()
 
 
 

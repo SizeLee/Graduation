@@ -382,3 +382,8 @@ w = np.array([[1,2,3],
              [2,3,4]])
 print(w.sum(1).sum())
 
+a = 0.
+b = 4.3
+c = 4.3
+print(b-c == a)
+

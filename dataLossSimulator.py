@@ -52,9 +52,9 @@ class dataLossSimulator:
         return np.array(lossDataX)
 
 
-
-# lossTest = dataLossSimulator(4, 0.3)
-# testData = myLoadData.loadIris().DataTrainX
-# print(testData)
-# lossdata = lossTest.lossSimulate(testData)
-# print(lossdata)
+if __name__ == '__main__':
+    lossTest = dataLossSimulator(4, 0.3)
+    testData = myLoadData.loadIris().DataTrainX
+    print(testData)
+    lossdata = lossTest.lossSimulate(testData)
+    print(lossdata)
